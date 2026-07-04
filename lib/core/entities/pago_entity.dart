@@ -29,40 +29,35 @@ class TordPagoEntity {
 
   factory TordPagoEntity.fromJson(Map<String, dynamic> json) {
     return TordPagoEntity(
-      idPago: json['IDPAGO'],
-      idOrden: json['IDORDEN'],
-      tipoPago: json['TIPOPAGO'],
-      metodoPago: json['METODOPAGO'],
-      monto: (json['MONTO'] as num?)?.toDouble(),
-      fechaPago: json['FECHAPAGO'] != null
-          ? DateTime.parse(json['FECHAPAGO'])
-          : null,
-      referencia: json['REFERENCIA'],
-      estado: json['ESTADO'],
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idPago: json['idpago'],
+      idOrden: json['idorden'],
+      tipoPago: json['tipopago'],
+      metodoPago: json['metodopago'],
+      monto: (json['monto'] as num?)?.toDouble(),
+      fechaPago: json['fechapago'] != null ? DateTime.parse(json['fechapago']) : null,
+      referencia: json['referencia'],
+      estado: json['estado'],
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDPAGO': idPago,
-      'IDORDEN': idOrden,
-      'TIPOPAGO': tipoPago,
-      'METODOPAGO': metodoPago,
-      'MONTO': monto,
-      'FECHAPAGO': fechaPago?.toIso8601String(),
-      'REFERENCIA': referencia,
-      'ESTADO': estado,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idpago': idPago,
+      'idorden': idOrden,
+      'tipopago': tipoPago,
+      'metodopago': metodoPago,
+      'monto': monto,
+      'fechapago': fechaPago?.toIso8601String(),
+      'referencia': referencia,
+      'estado': estado,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

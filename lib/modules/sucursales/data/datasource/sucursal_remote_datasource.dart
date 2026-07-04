@@ -22,8 +22,8 @@ class SucursalRemoteDataSource {
     try {
       final result = await SupabaseService.select(
         table: Entities.TORGSUCURSAL.tableName,
-        filters: {'ESTADO': true},
-        orderBy: 'FCREACION',
+        filters: {'estado': true},
+        orderBy: 'fcreacion',
         ascending: false,
       );
 
@@ -37,7 +37,7 @@ class SucursalRemoteDataSource {
     try {
       final result = await SupabaseService.selectListFree(
         table: Entities.TORGSUCURSAL.tableName,
-        filters: {'ESTADO': true},
+        filters: {'estado': true},
       );
       return result.map((json) => SucursalEntity.fromJson(json)).toList();
     } catch (e) {
@@ -50,7 +50,7 @@ class SucursalRemoteDataSource {
     try {
       final result = await SupabaseService.selectSingle(
         table: Entities.TORGSUCURSAL.tableName,
-        filters: {'IDSUCURSAL': idSucursal},
+        filters: {'idsucursal': idSucursal},
       );
 
       if (result == null) return null;
@@ -65,8 +65,8 @@ class SucursalRemoteDataSource {
     try {
       final result = await SupabaseService.select(
         table: Entities.TORGSUCURSAL.tableName,
-        filters: {'ESTADO': true},
-        orderBy: 'NOMBRE',
+        filters: {'estado': true},
+        orderBy: 'nombre',
         ascending: true,
       );
 
@@ -80,14 +80,14 @@ class SucursalRemoteDataSource {
   Future<SucursalEntity> createSucursal(SucursalEntity sucursal) async {
     try {
       final data = {
-        'NOMBRE': sucursal.nombre,
-        'DIRECCION': sucursal.direccion,
-        'ESTADO': sucursal.estado ?? true,
-        'LATITUD': sucursal.latitud,
-        'LONGITUD': sucursal.longitud,
-        'CONTACTO': sucursal.contacto,
-        'FCREACION': AppUtils.getFechaActual().toIso8601String(),
-        'USUARIOCREACION': sucursal.usuarioCreacion,
+        'nombre': sucursal.nombre,
+        'direccion': sucursal.direccion,
+        'estado': sucursal.estado ?? true,
+        'latitud': sucursal.latitud,
+        'longitud': sucursal.longitud,
+        'contacto': sucursal.contacto,
+        'fcreacion': AppUtils.getFechaActual().toIso8601String(),
+        'usuariocreacion': sucursal.usuarioCreacion,
       };
 
       final result = await SupabaseService.insert(
@@ -105,20 +105,20 @@ class SucursalRemoteDataSource {
   Future<SucursalEntity> updateSucursal(SucursalEntity sucursal) async {
     try {
       final data = {
-        'NOMBRE': sucursal.nombre,
-        'DIRECCION': sucursal.direccion,
-        'ESTADO': sucursal.estado,
-        'LATITUD': sucursal.latitud,
-        'LONGITUD': sucursal.longitud,
-        'CONTACTO': sucursal.contacto,
-        'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-        'USUARIOMODIFICACION': sucursal.usuarioModificacion,
+        'nombre': sucursal.nombre,
+        'direccion': sucursal.direccion,
+        'estado': sucursal.estado,
+        'latitud': sucursal.latitud,
+        'longitud': sucursal.longitud,
+        'contacto': sucursal.contacto,
+        'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+        'usuariomodificacion': sucursal.usuarioModificacion,
       };
 
       final result = await SupabaseService.update(
         table: Entities.TORGSUCURSAL.tableName,
         data: data,
-        filters: {'IDSUCURSAL': sucursal.idSucursal},
+        filters: {'idsucursal': sucursal.idSucursal},
       );
 
       return SucursalEntity.fromJson(result.first);
@@ -133,11 +133,11 @@ class SucursalRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TORGSUCURSAL.tableName,
         data: {
-          'ESTADO': false,
-          'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-          'USUARIOMODIFICACION': userModificacion,
+          'estado': false,
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariomodificacion': userModificacion,
         },
-        filters: {'IDSUCURSAL': idSucursal},
+        filters: {'idsucursal': idSucursal},
       );
 
       return true;
@@ -151,7 +151,7 @@ class SucursalRemoteDataSource {
     try {
       await SupabaseService.delete(
         table: Entities.TORGSUCURSAL.tableName,
-        filters: {'IDSUCURSAL': idSucursal},
+        filters: {'idsucursal': idSucursal},
       );
 
       return true;
@@ -166,9 +166,9 @@ class SucursalRemoteDataSource {
       final result = await SupabaseService.select(
         table: Entities.TORGSUCURSAL.tableName,
         filters: {
-          'NOMBRE': {'ilike': '%$nombre%'}
+          'nombre': {'ilike': '%$nombre%'}
         },
-        orderBy: 'NOMBRE',
+        orderBy: 'nombre',
         ascending: true,
       );
 
@@ -185,11 +185,11 @@ class SucursalRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TORGSUCURSAL.tableName,
         data: {
-          'ESTADO': estado,
-          'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-          'USUARIOMODIFICACION': userModificacion,
+          'estado': estado,
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariomodificacion': userModificacion,
         },
-        filters: {'IDSUCURSAL': idSucursal},
+        filters: {'idsucursal': idSucursal},
       );
 
       return true;

@@ -31,20 +31,20 @@ class PersonasRemoteDataSource {
 
       // Solo filtrar por estado activo si includeDeletes es false
       if (!includeDeletes) {
-        filters['ESTADO'] = EstadosPersona.ACTIVO.state;
+        filters['estado'] = EstadosPersona.ACTIVO.state;
       }
 
       if (fechaDesde != null) {
-        filters['FCREACION_gte'] = fechaDesde.toIso8601String();
+        filters['fcreacion_gte'] = fechaDesde.toIso8601String();
       }
       if (fechaHasta != null) {
-        filters['FCREACION_lte'] = fechaHasta.toIso8601String();
+        filters['fcreacion_lte'] = fechaHasta.toIso8601String();
       }
 
       final result = await SupabaseService.select(
         table: Entities.TPERPERSONA.tableName,
         filters: filters.isNotEmpty ? filters : null,
-        orderBy: 'FCREACION',
+        orderBy: 'fcreacion',
         ascending: false,
       );
       return result.map((json) => PersonaEntity.fromJson(json)).toList();
@@ -59,7 +59,7 @@ class PersonasRemoteDataSource {
       final result = await SupabaseService.selectSingle(
         table: Entities.TPERPERSONA.tableName,
         filters: {
-          'IDENTIFICACION': idPersona,
+          'identificacion': idPersona,
          // 'ESTADO': EstadosPersona.ACTIVO.state,
         },
       );
@@ -75,8 +75,8 @@ class PersonasRemoteDataSource {
       PersonaEntity persona, UserModel? user) async {
     try {
       final data = persona.toJson();
-      data.remove('IDPERSONA');
-      if (user != null) data['USUARIOCREACION'] = user.idUsuario.toString();
+      data.remove('idpersona');
+      if (user != null) data['usuariocreacion'] = user.idUsuario.toString();
 
       final result = await SupabaseService.insert(
         table: Entities.TPERPERSONA.tableName,
@@ -95,7 +95,7 @@ class PersonasRemoteDataSource {
       final result = await SupabaseService.update(
         table: Entities.TPERPERSONA.tableName,
         data: data ?? {},
-        filters: {'IDENTIFICACION': idPersona},
+        filters: {'identificacion': idPersona},
         returnData: true,
       );
       return PersonaEntity.fromJson(result.first);
@@ -109,17 +109,17 @@ class PersonasRemoteDataSource {
     try {
       final data = {
         'ESTADO': EstadosPersona.INACTIVO.state,
-        'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
+        'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
       };
 
       if (user != null) {
-        data['USUARIOMODIFICACION'] = user.idUsuario.toString();
+        data['usuariomodificacion'] = user.idUsuario.toString();
       }
 
       await SupabaseService.update(
         table: Entities.TPERPERSONA.tableName,
         data: data,
-        filters: {'IDENTIFICACION': idPersona},
+        filters: {'identificacion': idPersona},
         returnData: false,
       );
       return true;
@@ -144,34 +144,34 @@ class PersonasRemoteDataSource {
       var filtered = allPersonas;
       if (nombres != null && nombres.isNotEmpty) {
         filtered = filtered
-            .where((p) => (p['NOMBRES'] as String)
+            .where((p) => (p['nombres'] as String)
                 .toLowerCase()
                 .contains(nombres.toLowerCase()))
             .toList();
       }
       if (apellidos != null && apellidos.isNotEmpty) {
         filtered = filtered
-            .where((p) => (p['APELLIDOS'] as String)
+            .where((p) => (p['apellidos'] as String)
                 .toLowerCase()
                 .contains(apellidos.toLowerCase()))
             .toList();
       }
       if (correo != null && correo.isNotEmpty) {
         filtered = filtered
-            .where((p) => (p['CORREO'] as String)
+            .where((p) => (p['correo'] as String)
                 .toLowerCase()
                 .contains(correo.toLowerCase()))
             .toList();
       }
       if (telefono != null && telefono.isNotEmpty) {
         filtered = filtered
-            .where((p) => (p['TELEFONO'] as String)
+            .where((p) => (p['telefono'] as String)
                 .toLowerCase()
                 .contains(telefono.toLowerCase()))
             .toList();
       }
       if (activo != null) {
-        filtered = filtered.where((p) => p['ACTIVO'] == activo).toList();
+        filtered = filtered.where((p) => p['activo'] == activo).toList();
       }
 
       return filtered.map((json) => PersonaEntity.fromJson(json)).toList();
@@ -186,8 +186,8 @@ class PersonasRemoteDataSource {
     try {
       final result = await SupabaseService.update(
         table: Entities.TPERPERSONA.tableName,
-        data: {'ESTADO': activo == true ? 'ACTIVO' : 'INACTIVO'},
-        filters: {'IDENTIFICACION': idPersona},
+        data: {'estado': activo == true ? 'ACTIVO' : 'INACTIVO'},
+        filters: {'identificacion': idPersona},
       );
       return PersonaEntity.fromJson(result.first);
     } catch (e) {

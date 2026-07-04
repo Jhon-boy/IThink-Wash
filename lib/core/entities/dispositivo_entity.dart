@@ -33,44 +33,39 @@ class DispositivoEntity {
 
   factory DispositivoEntity.fromJson(Map<String, dynamic> json) {
     return DispositivoEntity(
-      idDispositivo: json['IDDISPOSITIVO'],
-      idUsuario: json['IDUSUARIO'] ?? 0,
-      imei: json['IMEI'],
-      marca: json['MARCA'],
-      modelo: json['MODELO'],
-      sistemaOperativo: json['SISTEMAOPERATIVO'],
-      versionSo: json['VERSIONSO'],
-      nombreDispositivo: json['NOMBREDISPOSITIVO'],
-      ultimoAcceso: json['ULTIMOACCESO'] != null
-          ? DateTime.parse(json['ULTIMOACCESO'])
-          : null,
-      activo: json['ACTIVO'] ?? true,
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idDispositivo: json['iddispositivo'],
+      idUsuario: json['idusuario'] ?? 0,
+      imei: json['imei'],
+      marca: json['marca'],
+      modelo: json['modelo'],
+      sistemaOperativo: json['sistemaoperativo'],
+      versionSo: json['versionso'],
+      nombreDispositivo: json['nombredispositivo'],
+      ultimoAcceso: json['ultimoacceso'] != null ? DateTime.parse(json['ultimoacceso']) : null,
+      activo: json['activo'] ?? true,
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDDISPOSITIVO': idDispositivo,
-      'IDUSUARIO': idUsuario,
-      'IMEI': imei,
-      'MARCA': marca,
-      'MODELO': modelo,
-      'SISTEMAOPERATIVO': sistemaOperativo,
-      'VERSIONSO': versionSo,
-      'NOMBREDISPOSITIVO': nombreDispositivo,
-      'ULTIMOACCESO': ultimoAcceso?.toIso8601String(),
-      'ACTIVO': activo,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'iddispositivo': idDispositivo,
+      'idusuario': idUsuario,
+      'imei': imei,
+      'marca': marca,
+      'modelo': modelo,
+      'sistemaoperativo': sistemaOperativo,
+      'versionso': versionSo,
+      'nombredispositivo': nombreDispositivo,
+      'ultimoacceso': ultimoAcceso?.toIso8601String(),
+      'activo': activo,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 
@@ -127,28 +122,17 @@ class DispositivoEntity {
     );
   }
 
-  /// Verifica si tiene IMEI
   bool get tieneImei => imei != null && imei!.isNotEmpty;
-
-  /// Verifica si tiene información completa del dispositivo
-  bool get tieneInfoCompleta =>
-      marca != null && modelo != null && sistemaOperativo != null;
+  bool get tieneInfoCompleta => marca != null && modelo != null && sistemaOperativo != null;
 
   String get nombreFormateado {
-    if (nombreDispositivo != null && nombreDispositivo!.isNotEmpty) {
-      return nombreDispositivo!;
-    }
-    if (marca != null && modelo != null) {
-      return '$marca $modelo';
-    } else if (marca != null) {
-      return marca!;
-    } else if (modelo != null) {
-      return modelo!;
-    }
+    if (nombreDispositivo != null && nombreDispositivo!.isNotEmpty) return nombreDispositivo!;
+    if (marca != null && modelo != null) return '$marca $modelo';
+    if (marca != null) return marca!;
+    if (modelo != null) return modelo!;
     return 'Dispositivo desconocido';
   }
 
-  /// Obtiene la fecha del último acceso formateada
   String get ultimoAccesoFormateado {
     if (ultimoAcceso == null) return 'Nunca';
     return '${ultimoAcceso!.day.toString().padLeft(2, '0')}/${ultimoAcceso!.month.toString().padLeft(2, '0')}/${ultimoAcceso!.year}';
@@ -156,29 +140,20 @@ class DispositivoEntity {
 
   bool get isActivo => activo == true;
 
-  /// Obtiene el tiempo desde el último acceso
   Duration? get tiempoDesdeUltimoAcceso {
     if (ultimoAcceso == null) return null;
     return DateTime.now().difference(ultimoAcceso!);
   }
 
-  /// Obtiene el tiempo desde el último acceso formateado
   String get tiempoDesdeUltimoAccesoFormateado {
     final tiempo = tiempoDesdeUltimoAcceso;
     if (tiempo == null) return 'Nunca';
-
-    if (tiempo.inDays > 0) {
-      return '${tiempo.inDays} días';
-    } else if (tiempo.inHours > 0) {
-      return '${tiempo.inHours} horas';
-    } else if (tiempo.inMinutes > 0) {
-      return '${tiempo.inMinutes} minutos';
-    } else {
-      return 'Recién';
-    }
+    if (tiempo.inDays > 0) return '${tiempo.inDays} días';
+    if (tiempo.inHours > 0) return '${tiempo.inHours} horas';
+    if (tiempo.inMinutes > 0) return '${tiempo.inMinutes} minutos';
+    return 'Recién';
   }
 
-  /// Obtiene el sistema operativo formateado
   String get sistemaOperativoFormateado {
     if (sistemaOperativo == null) return 'Desconocido';
     return sistemaOperativo!.toUpperCase();
@@ -200,10 +175,6 @@ class DispositivoEntity {
 
   @override
   int get hashCode {
-    return Object.hash(
-      idDispositivo,
-      idUsuario,
-      imei,
-    );
+    return Object.hash(idDispositivo, idUsuario, imei);
   }
 }

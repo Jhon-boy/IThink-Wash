@@ -1,4 +1,3 @@
-// ENTIDAD PARA LOS ROLES DE USUARIOS
 class RolEntity {
   final int idRol;
   final String codigo;
@@ -24,31 +23,29 @@ class RolEntity {
 
   factory RolEntity.fromJson(Map<String, dynamic> json) {
     return RolEntity(
-      idRol: json['IDROL'],
-      codigo: json['CODIGO'] ?? '',
-      nombre: json['NOMBRE'] ?? '',
-      fCreacion: DateTime.parse(json['FCREACION']),
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      observacion: json['OBSERVACION'],
-      estado: json['ESTADO'] ?? '',
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idRol: json['idrol'],
+      codigo: json['codigo'] ?? '',
+      nombre: json['nombre'] ?? '',
+      fCreacion: DateTime.parse(json['fcreacion']),
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      observacion: json['observacion'],
+      estado: json['estado'] ?? '',
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDROL': idRol,
-      'CODIGO': codigo,
-      'NOMBRE': nombre,
-      'FCREACION': fCreacion.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'OBSERVACION': observacion,
-      'ESTADO': estado,
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idrol': idRol,
+      'codigo': codigo,
+      'nombre': nombre,
+      'fcreacion': fCreacion.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'observacion': observacion,
+      'estado': estado,
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

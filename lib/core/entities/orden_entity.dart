@@ -41,56 +41,47 @@ class TordOrdenEntity {
 
   factory TordOrdenEntity.fromJson(Map<String, dynamic> json) {
     return TordOrdenEntity(
-      idOrden: json['IDORDEN'],
-      idSucursal: json['IDSUCURSAL'] ?? 0,
-      idPersona: json['IDPERSONA'] ?? 0,
-      idEmpleado: json['IDEMPLEADO'] ?? 0,
-      numeroOrden: json['NUMEROORDEN'],
-      fechaRecepcion: json['FECHARECEPCION'] != null
-          ? DateTime.parse(json['FECHARECEPCION'])
-          : DateTime.now(),
-      fechaEntregaEstimada: json['FECHAENTREGAESTIMADA'] != null
-          ? DateTime.parse(json['FECHAENTREGAESTIMADA'])
-          : null,
-      fechaEntregaReal: json['FECHAENTREGAREAL'] != null
-          ? DateTime.parse(json['FECHAENTREGAREAL'])
-          : null,
-      subtotal: (json['SUBTOTAL'] as num?)?.toDouble(),
-      total: (json['TOTAL'] as num?)?.toDouble(),
-      totalAbonado: (json['TOTALABONADO'] as num?)?.toDouble(),
-      saldoPendiente: (json['SALDOPENDIENTE'] as num?)?.toDouble(),
-      estado: json['ESTADO'] ?? 'EN_PROCESO',
-      comentario: json['COMENTARIO'],
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idOrden: json['idorden'],
+      idSucursal: json['idsucursal'] ?? 0,
+      idPersona: json['idpersona'] ?? 0,
+      idEmpleado: json['idempleado'] ?? 0,
+      numeroOrden: json['numeroorden'],
+      fechaRecepcion: json['fecharecepcion'] != null ? DateTime.parse(json['fecharecepcion']) : DateTime.now(),
+      fechaEntregaEstimada: json['fechaentregaestimada'] != null ? DateTime.parse(json['fechaentregaestimada']) : null,
+      fechaEntregaReal: json['fechaentregareal'] != null ? DateTime.parse(json['fechaentregareal']) : null,
+      subtotal: (json['subtotal'] as num?)?.toDouble(),
+      total: (json['total'] as num?)?.toDouble(),
+      totalAbonado: (json['totalabonado'] as num?)?.toDouble(),
+      saldoPendiente: (json['saldopendiente'] as num?)?.toDouble(),
+      estado: json['estado'] ?? 'EN_PROCESO',
+      comentario: json['comentario'],
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDORDEN': idOrden,
-      'IDSUCURSAL': idSucursal,
-      'IDPERSONA': idPersona,
-      'IDEMPLEADO': idEmpleado,
-      'NUMEROORDEN': numeroOrden,
-      'FECHARECEPCION': fechaRecepcion.toIso8601String(),
-      'FECHAENTREGAESTIMADA': fechaEntregaEstimada?.toIso8601String(),
-      'FECHAENTREGAREAL': fechaEntregaReal?.toIso8601String(),
-      'SUBTOTAL': subtotal,
-      'TOTAL': total,
-      'TOTALABONADO': totalAbonado,
-      'SALDOPENDIENTE': saldoPendiente,
-      'ESTADO': estado,
-      'COMENTARIO': comentario,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idorden': idOrden,
+      'idsucursal': idSucursal,
+      'idpersona': idPersona,
+      'idempleado': idEmpleado,
+      'numeroorden': numeroOrden,
+      'fecharecepcion': fechaRecepcion.toIso8601String(),
+      'fechaentregaestimada': fechaEntregaEstimada?.toIso8601String(),
+      'fechaentregareal': fechaEntregaReal?.toIso8601String(),
+      'subtotal': subtotal,
+      'total': total,
+      'totalabonado': totalAbonado,
+      'saldopendiente': saldoPendiente,
+      'estado': estado,
+      'comentario': comentario,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

@@ -21,30 +21,27 @@ class TsegUsuarioCanalEntity {
 
   factory TsegUsuarioCanalEntity.fromJson(Map<String, dynamic> json) {
     return TsegUsuarioCanalEntity(
-      idUsuarioCanal: json['IDUSUARIOCANAL'],
-      idUsuario: json['IDUSUARIO'] ?? 0,
-      idCanal: json['IDCANAL'] ?? 0,
-      estado: json['ESTADO'] ?? 'ACTIVO',
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idUsuarioCanal: json['idusuariocanal'],
+      idUsuario: json['idusuario'] ?? 0,
+      idCanal: json['idcanal'] ?? 0,
+      estado: json['estado'] ?? 'ACTIVO',
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDUSUARIOCANAL': idUsuarioCanal,
-      'IDUSUARIO': idUsuario,
-      'IDCANAL': idCanal,
-      'ESTADO': estado,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idusuariocanal': idUsuarioCanal,
+      'idusuario': idUsuario,
+      'idcanal': idCanal,
+      'estado': estado,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

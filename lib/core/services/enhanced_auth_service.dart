@@ -32,7 +32,7 @@ class EnhancedAuthService {
       final usuarioResponse = await _supabase
           .from(Entities.TSEGUSUARIO.tableName)
           .select("*")
-          .eq("USUARIO", usuario)
+          .eq("usuario", usuario)
           .maybeSingle();
 
       if (usuarioResponse == null) {
@@ -44,7 +44,7 @@ class EnhancedAuthService {
       }
 
       // Verificar contraseña
-      if (usuarioResponse['PASSWORD'] != hashedPassword) {
+      if (usuarioResponse['password'] != hashedPassword) {
         return {
           'success': false,
           'message': 'Usuario o contraseña incorrectos',
@@ -52,7 +52,7 @@ class EnhancedAuthService {
         };
       }
 
-      final idPersona = usuarioResponse['IDPERSONA'];
+      final idPersona = usuarioResponse['idpersona'];
       final persona = await _getPersonaByIdDirect(idPersona);
 
       // Crear entidad de usuario
@@ -74,6 +74,7 @@ class EnhancedAuthService {
         'message': 'Login exitoso'
       };
     } catch (e) {
+      debugPrint('Error en loginSecure: $e');
       return {
         'success': false,
         'message': 'Error de conexión: $e',
@@ -173,7 +174,7 @@ class EnhancedAuthService {
       final response = await _supabase
           .from(Entities.TPERPERSONA.tableName)
           .select("*")
-          .eq("IDPERSONA", idPersona)
+          .eq("idpersona", idPersona)
           .maybeSingle();
 
       if (response == null) {
@@ -221,7 +222,7 @@ class EnhancedAuthService {
       final response = await _supabase
           .from(Entities.TPERPERSONA.tableName)
           .select("*")
-          .eq("IDENTIFICACION", identificacion)
+          .eq("identificacion", identificacion)
           .maybeSingle();
 
       if (response == null) {
@@ -247,7 +248,7 @@ class EnhancedAuthService {
       final response = await _supabase
           .from(Entities.TSEGUSUARIO.tableName)
           .select("*")
-          .eq("IDUSUARIO", idUsuario)
+          .eq("idusuario", idUsuario)
           .maybeSingle();
 
       if (response == null) {
@@ -285,7 +286,7 @@ class EnhancedAuthService {
       // Actualizar contraseña
       await _supabase
           .from(Entities.TSEGUSUARIO.tableName)
-          .update({'PASSWORD': newHash}).eq('USUARIO', _currentUser!.usuario!);
+          .update({'password': newHash}).eq('usuario', _currentUser!.usuario!);
 
       return {
         'success': true,

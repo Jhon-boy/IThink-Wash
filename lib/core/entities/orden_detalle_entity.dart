@@ -27,36 +27,33 @@ class TordOrdenDetalleEntity {
 
   factory TordOrdenDetalleEntity.fromJson(Map<String, dynamic> json) {
     return TordOrdenDetalleEntity(
-      idOrdenDetalle: json['IDORDENDETALLE'],
-      idOrden: json['IDORDEN'] ?? 0,
-      idConcepto: json['IDCONCEPTO'] ?? 0,
-      descripcionPrenda: json['DESCRIPCIONPRENDA'],
-      cantidad: (json['CANTIDAD'] as num?)?.toDouble(),
-      precioUnitario: (json['PRECIOUNITARIO'] as num?)?.toDouble(),
-      subtotal: (json['SUBTOTAL'] as num?)?.toDouble(),
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idOrdenDetalle: json['idordendetalle'],
+      idOrden: json['idorden'] ?? 0,
+      idConcepto: json['idconcepto'] ?? 0,
+      descripcionPrenda: json['descripcionprenda'],
+      cantidad: (json['cantidad'] as num?)?.toDouble(),
+      precioUnitario: (json['preciounitario'] as num?)?.toDouble(),
+      subtotal: (json['subtotal'] as num?)?.toDouble(),
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDORDENDETALLE': idOrdenDetalle,
-      'IDORDEN': idOrden,
-      'IDCONCEPTO': idConcepto,
-      'DESCRIPCIONPRENDA': descripcionPrenda,
-      'CANTIDAD': cantidad,
-      'PRECIOUNITARIO': precioUnitario,
-      'SUBTOTAL': subtotal,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idordendetalle': idOrdenDetalle,
+      'idorden': idOrden,
+      'idconcepto': idConcepto,
+      'descripcionprenda': descripcionPrenda,
+      'cantidad': cantidad,
+      'preciounitario': precioUnitario,
+      'subtotal': subtotal,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

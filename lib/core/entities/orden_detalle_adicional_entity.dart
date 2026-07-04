@@ -21,30 +21,27 @@ class TordOrdenDetalleAdicionalEntity {
 
   factory TordOrdenDetalleAdicionalEntity.fromJson(Map<String, dynamic> json) {
     return TordOrdenDetalleAdicionalEntity(
-      idOrdenDetalleAdicional: json['IDORDENDETALLEADICIONAL'],
-      idOrdenDetalle: json['IDORDENDETALLE'],
-      idServicioAdicional: json['IDSERVICIOADICIONAL'],
-      precioAplicado: (json['PRECIOAPLICADO'] as num?)?.toDouble(),
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idOrdenDetalleAdicional: json['idordendetalleadicional'],
+      idOrdenDetalle: json['idordendetalle'],
+      idServicioAdicional: json['idservicioadicional'],
+      precioAplicado: (json['precioaplicado'] as num?)?.toDouble(),
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDORDENDETALLEADICIONAL': idOrdenDetalleAdicional,
-      'IDORDENDETALLE': idOrdenDetalle,
-      'IDSERVICIOADICIONAL': idServicioAdicional,
-      'PRECIOAPLICADO': precioAplicado,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idordendetalleadicional': idOrdenDetalleAdicional,
+      'idordendetalle': idOrdenDetalle,
+      'idservicioadicional': idServicioAdicional,
+      'precioaplicado': precioAplicado,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

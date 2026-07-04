@@ -41,7 +41,7 @@ class AuthRemoteDataSourceImpl {
       final response = await supabase
           .from(Entities.TPERPERSONA.tableName)
           .select("*")
-          .eq("IDENTIFICACION", identificacion)
+          .eq("identificacion", identificacion)
           .maybeSingle();
 
       if (response == null) {
@@ -66,13 +66,13 @@ class AuthRemoteDataSourceImpl {
       final deviceRecord = await SupabaseService.selectSingleFree(
         table: Entities.TSEGDISPOSITIVO.tableName,
         filters: {
-          'IMEI': deviceInfo.idUnico,
+          'imei': deviceInfo.idUnico,
         },
       );
 
       if (deviceRecord == null) return null;
       if (!_verifyDeviceData(deviceInfo, deviceRecord)) return null;
-      final userId = deviceRecord['IDUSUARIO'] as int;
+      final userId = deviceRecord['idusuario'] as int;
       final user = await _buildUserModel(userId);
       await EnhancedAuthService.saveDeviceTrustSession(
         user: user,
@@ -92,7 +92,7 @@ class AuthRemoteDataSourceImpl {
       final deviceRecord = await SupabaseService.selectSingleFree(
         table: Entities.TSEGDISPOSITIVO.tableName,
         filters: {
-          'IMEI': imei,
+          'imei': imei,
         },
       );
 
@@ -108,7 +108,7 @@ class AuthRemoteDataSourceImpl {
   Future<UserModel> _buildUserModel(int userId) async {
     final userRecord = await SupabaseService.selectSingleFree(
       table: Entities.TSEGUSUARIO.tableName,
-      filters: {'IDUSUARIO': userId},
+      filters: {'idusuario': userId},
     );
 
     if (userRecord == null) {
@@ -119,31 +119,31 @@ class AuthRemoteDataSourceImpl {
 
     final personaRecord = await SupabaseService.selectSingleFree(
       table: Entities.TPERPERSONA.tableName,
-      filters: {'IDPERSONA': userRecord['IDPERSONA']},
+      filters: {'idpersona': userRecord['idpersona']},
     );
 
     if (personaRecord == null) {
       throw ServerException(
         message:
-            "No se encontraron datos de persona para ${userRecord['IDENTIFICACION']}",
+            "No se encontraron datos de persona para idpersona ${userRecord['idpersona']}",
       );
     }
-    if (personaRecord['ESTADO'] == EstadosPersona.INACTIVO.state) {
+    if (personaRecord['estado'] == EstadosPersona.INACTIVO.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado inactivo",
       );
     }
-    if (personaRecord['ESTADO'] == EstadosPersona.BLOQUEADO.state) {
+    if (personaRecord['estado'] == EstadosPersona.BLOQUEADO.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado bloqueado",
       );
     }
-    if (personaRecord['ESTADO'] == EstadosPersona.SUSPENDIDO.state) {
+    if (personaRecord['estado'] == EstadosPersona.SUSPENDIDO.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado suspendido",
       );
     }
-    if (personaRecord['ESTADO'] == EstadosPersona.PENDIENTE.state) {
+    if (personaRecord['estado'] == EstadosPersona.PENDIENTE.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado pendiente",
       );
@@ -185,13 +185,13 @@ class AuthRemoteDataSourceImpl {
       final existingDevice = await SupabaseService.selectSingle(
         table: Entities.TSEGDISPOSITIVO.tableName,
         filters: {
-          'IMEI': deviceInfo.idUnico,
+          'imei': deviceInfo.idUnico,
         },
       );
 
       if (existingDevice != null) {
         // Si el dispositivo ya existe y pertenece a otro usuario, no permitir el registro
-        final existingUserId = existingDevice['IDUSUARIO'] as int;
+        final existingUserId = existingDevice['idusuario'] as int;
         if (existingUserId != entity.idUsuario) {
           debugPrint(
               'ERROR: El dispositivo ya está registrado por otro usuario');
@@ -201,12 +201,12 @@ class AuthRemoteDataSourceImpl {
         await SupabaseService.update(
           table: Entities.TSEGDISPOSITIVO.tableName,
           data: {
-            'ULTIMOACCESO': AppUtils.getFechaActual().toIso8601String(),
-            'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-            'USUARIOMODIFICACION': entity.usuario ?? '',
+            'ultimoacceso': AppUtils.getFechaActual().toIso8601String(),
+            'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+            'usuariomodificacion': entity.usuario ?? '',
           },
           filters: {
-            'IMEI': deviceInfo.idUnico,
+            'imei': deviceInfo.idUnico,
           },
         );
         debugPrint('Dispositivo actualizado exitosamente');
@@ -216,19 +216,19 @@ class AuthRemoteDataSourceImpl {
       await SupabaseService.insert(
         table: Entities.TSEGDISPOSITIVO.tableName,
         data: {
-          'IDUSUARIO': entity.idUsuario,
-          'IMEI': deviceInfo.idUnico,
-          'MARCA': deviceInfo.fabricante ?? 'Desconocida',
-          'MODELO': deviceInfo.modelo ?? 'Desconocido',
-          'SISTEMAOPERATIVO': deviceInfo.sistemaOperativo ?? 'Desconocido',
-          'VERSIONSO': deviceInfo.versionSO,
-          'NOMBREDISPOSITIVO': deviceInfo.modelo ?? 'Desconocido',
-          'ACTIVO': true,
-          'ULTIMOACCESO': AppUtils.getFechaActual().toIso8601String(),
-          'FCREACION': AppUtils.getFechaActual().toIso8601String(),
-          'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-          'USUARIOCREACION': entity.usuario ?? '',
-          'USUARIOMODIFICACION': entity.usuario ?? '',
+          'idusuario': entity.idUsuario,
+          'imei': deviceInfo.idUnico,
+          'marca': deviceInfo.fabricante ?? 'Desconocida',
+          'modelo': deviceInfo.modelo ?? 'Desconocido',
+          'sistemaoperativo': deviceInfo.sistemaOperativo ?? 'Desconocido',
+          'versionso': deviceInfo.versionSO,
+          'nombredispositivo': deviceInfo.modelo ?? 'Desconocido',
+          'activo': true,
+          'ultimoacceso': AppUtils.getFechaActual().toIso8601String(),
+          'fcreacion': AppUtils.getFechaActual().toIso8601String(),
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariocreacion': entity.usuario ?? '',
+          'usuariomodificacion': entity.usuario ?? '',
         },
       );
 
@@ -247,7 +247,7 @@ class AuthRemoteDataSourceImpl {
       await SupabaseService.delete(
         table: Entities.TSEGDISPOSITIVO.tableName,
         filters: {
-          'IMEI': imei,
+          'imei': imei,
         },
       );
       return true;
@@ -261,17 +261,17 @@ class AuthRemoteDataSourceImpl {
   bool _verifyDeviceData(
       DeviceInfoModel currentDevice, Map<String, dynamic> registeredDevice) {
     if (currentDevice.fabricante?.toLowerCase() !=
-        (registeredDevice['MARCA'] ?? '').toString().toLowerCase()) {
+        (registeredDevice['marca'] ?? '').toString().toLowerCase()) {
       return false;
     }
 
     if (currentDevice.modelo?.toLowerCase() !=
-        (registeredDevice['MODELO'] ?? '').toString().toLowerCase()) {
+        (registeredDevice['modelo'] ?? '').toString().toLowerCase()) {
       return false;
     }
 
     if (currentDevice.sistemaOperativo?.toLowerCase() !=
-        (registeredDevice['SISTEMAOPERATIVO'] ?? '').toString().toLowerCase()) {
+        (registeredDevice['sistemaoperativo'] ?? '').toString().toLowerCase()) {
       return false;
     }
 
@@ -283,8 +283,8 @@ class AuthRemoteDataSourceImpl {
       final List<Map<String, dynamic>> records = await SupabaseService.select(
         table: Entities.TSEGROLUSUARIO.tableName,
         columns:
-            'TSEGROL(IDROL, CODIGO, NOMBRE, FCREACION, FMODIFICACION, OBSERVACION, ESTADO, USUARIOCREACION, USUARIOMODIFICACION)',
-        filters: {'IDUSUARIO': idUsuario},
+            'tsegrol(idrol, codigo, nombre, fcreacion, fmodificacion, observacion, estado, usuariocreacion, usuariomodificacion)',
+        filters: {'idusuario': idUsuario},
       );
 
       final roles = records.map((r) {

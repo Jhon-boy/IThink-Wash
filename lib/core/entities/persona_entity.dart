@@ -35,47 +35,41 @@ class PersonaEntity {
 
   factory PersonaEntity.fromJson(Map<String, dynamic> json) {
     return PersonaEntity(
-      idPersona: json['IDPERSONA'],
-      identificacion: json['IDENTIFICACION'] ?? '',
-      nombres: json['NOMBRES'] ?? '',
-      apellidos: json['APELLIDOS'] ?? '',
-      fechaNacimiento: json['FNACIMIENTO'] != null
-          ? DateTime.parse(json['FNACIMIENTO'])
-          : null,
-      genero: json['GENERO'],
-      correo: json['CORREO'],
-      telefono: json['TELEFONO'],
-      direccion: json['DIRECCION'],
-      tipoIdentificacion: json['TIPOIDENTIFICACION'],
-      estado: json['ESTADO'],
-      fCreacion: json['FCREACION'] != null
-          ? DateTime.parse(json['FCREACION'])
-          : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idPersona: json['idpersona'],
+      identificacion: json['identificacion'] ?? '',
+      nombres: json['nombres'] ?? '',
+      apellidos: json['apellidos'] ?? '',
+      fechaNacimiento: json['fnacimiento'] != null ? DateTime.parse(json['fnacimiento']) : null,
+      genero: json['genero'],
+      correo: json['correo'],
+      telefono: json['telefono'],
+      direccion: json['direccion'],
+      tipoIdentificacion: json['tipoidentificacion'],
+      estado: json['estado'],
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDPERSONA': idPersona,
-      'IDENTIFICACION': identificacion,
-      'NOMBRES': nombres,
-      'APELLIDOS': apellidos,
-      'FNACIMIENTO': fechaNacimiento?.toIso8601String(),
-      'GENERO': genero,
-      'CORREO': correo,
-      'TELEFONO': telefono,
-      'DIRECCION': direccion,
-      'TIPOIDENTIFICACION': tipoIdentificacion,
-      'ESTADO': estado,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idpersona': idPersona,
+      'identificacion': identificacion,
+      'nombres': nombres,
+      'apellidos': apellidos,
+      'fnacimiento': fechaNacimiento?.toIso8601String(),
+      'genero': genero,
+      'correo': correo,
+      'telefono': telefono,
+      'direccion': direccion,
+      'tipoidentificacion': tipoIdentificacion,
+      'estado': estado,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

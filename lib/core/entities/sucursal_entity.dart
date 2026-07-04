@@ -25,55 +25,47 @@ class SucursalEntity {
     this.usuarioModificacion,
   });
 
-  /// Factory constructor desde JSON de la base de datos
   factory SucursalEntity.fromJson(Map<String, dynamic> json) {
-    // Manejar estado como booleano o string (para compatibilidad)
     bool? estado;
-    if (json['ESTADO'] != null) {
-      if (json['ESTADO'] is bool) {
-        estado = json['ESTADO'] as bool;
-      } else if (json['ESTADO'] is String) {
-        estado = json['ESTADO'].toString().toUpperCase() == 'ACTIVO' ||
-            json['ESTADO'].toString().toUpperCase() == 'TRUE';
+    if (json['estado'] != null) {
+      if (json['estado'] is bool) {
+        estado = json['estado'] as bool;
+      } else if (json['estado'] is String) {
+        estado = json['estado'].toString().toUpperCase() == 'ACTIVO' ||
+            json['estado'].toString().toUpperCase() == 'TRUE';
       }
     }
-
     return SucursalEntity(
-      idSucursal: json['IDSUCURSAL'],
-      nombre: json['NOMBRE'] ?? '',
-      direccion: json['DIRECCION'],
+      idSucursal: json['idsucursal'],
+      nombre: json['nombre'] ?? '',
+      direccion: json['direccion'],
       estado: estado,
-      latitud: json['LATITUD']?.toDouble(),
-      longitud: json['LONGITUD']?.toDouble(),
-      contacto: json['CONTACTO'],
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      latitud: json['latitud']?.toDouble(),
+      longitud: json['longitud']?.toDouble(),
+      contacto: json['contacto'],
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
-  /// Convierte la entidad a JSON para la base de datos
   Map<String, dynamic> toJson() {
     return {
-      'IDSUCURSAL': idSucursal,
-      'NOMBRE': nombre,
-      'DIRECCION': direccion,
-      'ESTADO': estado,
-      'LATITUD': latitud,
-      'LONGITUD': longitud,
-      'CONTACTO': contacto,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idsucursal': idSucursal,
+      'nombre': nombre,
+      'direccion': direccion,
+      'estado': estado,
+      'latitud': latitud,
+      'longitud': longitud,
+      'contacto': contacto,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 
-  /// Convierte la entidad a JSON para la UI (nombres en camelCase)
   Map<String, dynamic> toJsonForUI() {
     return {
       'idSucursal': idSucursal,
@@ -90,7 +82,6 @@ class SucursalEntity {
     };
   }
 
-  /// Crea una copia de la entidad con algunos campos modificados
   SucursalEntity copyWith({
     int? idSucursal,
     String? nombre,
@@ -121,7 +112,6 @@ class SucursalEntity {
     );
   }
 
-  /// Verifica si la sucursal está activa
   bool get isActiva => estado == true;
 
   @override
@@ -141,14 +131,6 @@ class SucursalEntity {
 
   @override
   int get hashCode {
-    return Object.hash(
-      idSucursal,
-      nombre,
-      direccion,
-      estado,
-      latitud,
-      longitud,
-      contacto,
-    );
+    return Object.hash(idSucursal, nombre, direccion, estado, latitud, longitud, contacto);
   }
 }

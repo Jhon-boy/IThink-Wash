@@ -25,7 +25,7 @@ class RolUsuarioRemoteDataSource {
     try {
       final result = await SupabaseService.selectSingle(
         table: Entities.TSEGUSUARIO.tableName,
-        filters: {'IDUSUARIO': idUsuario},
+        filters: {'idusuario': idUsuario},
       );
       if (result == null) return null;
       return TsegUsuarioEntity.fromJson(result);
@@ -39,10 +39,10 @@ class RolUsuarioRemoteDataSource {
     try {
       final rol = await SupabaseService.selectSingle(
         table: Entities.TSEGROL.tableName,
-        filters: {'CODIGO': codigo, 'ESTADO': EstadosPersona.ACTIVO.state},
+        filters: {'codigo': codigo, 'estado': EstadosPersona.ACTIVO.state},
       );
       if (rol == null) return null;
-      return rol['IDROL'] as int?;
+      return rol['idrol'] as int?;
     } catch (e) {
       _handleError(e, 'getIdRolByCodigo');
     }
@@ -60,8 +60,8 @@ class RolUsuarioRemoteDataSource {
       // Luego obtenemos los IDUSUARIO que tienen ese rol
       final rolUsuarios = await SupabaseService.select(
           table: Entities.TSEGROLUSUARIO.tableName,
-          columns: 'IDUSUARIO',
-          filters: {'IDROL': idRol});
+          columns: 'idusuario',
+          filters: {'idrol': idRol});
 
       if (rolUsuarios.isEmpty) {
         return [];
@@ -69,7 +69,7 @@ class RolUsuarioRemoteDataSource {
 
       // Extraemos los IDs únicos
       final idsUsuarios =
-          rolUsuarios.map((e) => e['IDUSUARIO'] as int).toSet().toList();
+          rolUsuarios.map((e) => e['idusuario'] as int).toSet().toList();
 
       // Obtenemos los usuarios con esos IDs
       final usuarios = <TsegUsuarioEntity>[];
@@ -92,7 +92,7 @@ class RolUsuarioRemoteDataSource {
       // Verificar si ya existe
       final existente = await SupabaseService.selectSingle(
         table: Entities.TSEGROLUSUARIO.tableName,
-        filters: {'IDUSUARIO': idUsuario, 'IDROL': idRol},
+        filters: {'idusuario': idUsuario, 'idrol': idRol},
       );
 
       if (existente != null) {
@@ -100,12 +100,12 @@ class RolUsuarioRemoteDataSource {
         await SupabaseService.update(
           table: Entities.TSEGROLUSUARIO.tableName,
           data: {
-            'ESTADO': EstadosPersona.ACTIVO.state,
-            'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
+            'estado': EstadosPersona.ACTIVO.state,
+            'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
           },
           filters: {
-            'IDUSUARIO': idUsuario,
-            'IDROL': idRol,
+            'idusuario': idUsuario,
+            'idrol': idRol,
           },
           returnData: false,
         );
@@ -115,11 +115,11 @@ class RolUsuarioRemoteDataSource {
       await SupabaseService.insert(
         table: Entities.TSEGROLUSUARIO.tableName,
         data: {
-          'IDUSUARIO': idUsuario,
-          'IDROL': idRol,
-          'ESTADO': EstadosPersona.ACTIVO.state,
-          'FCREACION': AppUtils.getFechaActual().toIso8601String(),
-          'USUARIOCREACION': '0',
+          'idusuario': idUsuario,
+          'idrol': idRol,
+          'estado': EstadosPersona.ACTIVO.state,
+          'fcreacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariocreacion': '0',
         },
       );
       return true;
@@ -141,13 +141,13 @@ class RolUsuarioRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TSEGROLUSUARIO.tableName,
         data: {
-          'ESTADO': EstadosPersona.INACTIVO.state,
-          'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-          'USUARIOMODIFICACION': '0',
+          'estado': EstadosPersona.INACTIVO.state,
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariomodificacion': '0',
         },
         filters: {
-          'IDUSUARIO': idUsuario,
-          'IDROL': idRol,
+          'idusuario': idUsuario,
+          'idrol': idRol,
         },
         returnData: false,
       );
@@ -162,13 +162,13 @@ class RolUsuarioRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TSEGROLUSUARIO.tableName,
         data: {
-          'ESTADO': EstadosPersona.INACTIVO.state,
-          'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
-          'USUARIOMODIFICACION': '0',
+          'estado': EstadosPersona.INACTIVO.state,
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariomodificacion': '0',
         },
         filters: {
-          'IDUSUARIO': idUsuario,
-          'IDROL': idRol,
+          'idusuario': idUsuario,
+          'idrol': idRol,
         },
         returnData: false,
       );
@@ -183,13 +183,13 @@ class RolUsuarioRemoteDataSource {
     try {
       final roles = await SupabaseService.select(
         table: Entities.TSEGROLUSUARIO.tableName,
-        columns: 'IDROL',
+        columns: 'idrol',
         filters: {
-          'IDUSUARIO': idUsuario,
-          'ESTADO': EstadosPersona.ACTIVO.state
+          'idusuario': idUsuario,
+          'estado': EstadosPersona.ACTIVO.state
         },
       );
-      return roles.map((e) => e['IDROL'] as int?).whereType<int>().toList();
+      return roles.map((e) => e['idrol'] as int?).whereType<int>().toList();
     } catch (e) {
       _handleError(e, 'getRolesUsuario');
     }
@@ -200,8 +200,8 @@ class RolUsuarioRemoteDataSource {
     try {
       final result = await SupabaseService.select(
         table: Entities.TSEGROLUSUARIO.tableName,
-        filters: {'IDUSUARIO': idUsuario},
-        orderBy: 'FCREACION',
+        filters: {'idusuario': idUsuario},
+        orderBy: 'fcreacion',
         ascending: false,
       );
       return result.map((json) => RolUsuarioEntity.fromJson(json)).toList();
@@ -215,8 +215,8 @@ class RolUsuarioRemoteDataSource {
     try {
       final result = await SupabaseService.select(
         table: Entities.TSEGROL.tableName,
-        filters: {'ESTADO': EstadosPersona.ACTIVO.state},
-        orderBy: 'FCREACION',
+        filters: {'estado': EstadosPersona.ACTIVO.state},
+        orderBy: 'fcreacion',
         ascending: false,
       );
       return result.map((json) => RolEntity.fromJson(json)).toList();
@@ -233,15 +233,15 @@ class RolUsuarioRemoteDataSource {
       final rolUsuarios = idRolCliente != null
           ? await SupabaseService.select(
               table: Entities.TSEGROLUSUARIO.tableName,
-              columns: 'IDUSUARIO',
+              columns: 'idusuario',
               filters: {
-                'IDROL_neq': idRolCliente,
+                'idrol_neq': idRolCliente,
               },
             )
           : await SupabaseService.select(
               table: Entities.TSEGROLUSUARIO.tableName,
-              columns: 'IDUSUARIO',
-              filters: {'ESTADO': EstadosPersona.ACTIVO.state},
+              columns: 'idusuario',
+              filters: {'estado': EstadosPersona.ACTIVO.state},
             );
 
       if (rolUsuarios.isEmpty) {
@@ -249,7 +249,7 @@ class RolUsuarioRemoteDataSource {
       }
 
       final idsUsuarios = rolUsuarios
-          .map((e) => e['IDUSUARIO'] as int?)
+          .map((e) => e['idusuario'] as int?)
           .whereType<int>()
           .toSet()
           .toList();

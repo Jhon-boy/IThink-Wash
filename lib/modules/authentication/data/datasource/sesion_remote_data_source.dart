@@ -15,8 +15,8 @@ class SessionRemoteDataSource {
   Future<bool> createSesion(SesionEntity sesion) async {
     try {
       final data = sesion.toJson();
-      if (data['FECHAINICIO'] == null) {
-        data['FECHAINICIO'] = AppUtils.getFechaActual().toIso8601String();
+      if (data['fechainicio'] == null) {
+        data['fechainicio'] = AppUtils.getFechaActual().toIso8601String();
       }
       await SupabaseService.insert(
         table: Entities.TSEGSESION.tableName,
@@ -35,8 +35,8 @@ class SessionRemoteDataSource {
           table: Entities.TSEGSESION.tableName,
           ascending: true,
           filters: {
-            'FECHAINICIO_gte': fechaDesde.toIso8601String(),
-            'FECHAINICIO_lte': fechaHasta.toIso8601String(),
+            'fechainicio_gte': fechaDesde.toIso8601String(),
+            'fechainicio_lte': fechaHasta.toIso8601String(),
           });
       return result.map((json) => SesionEntity.fromJson(json)).toList();
     } catch (e) {
@@ -48,7 +48,7 @@ class SessionRemoteDataSource {
     try {
       final result = await SupabaseService.selectSingle(
         table: Entities.TSEGSESION.tableName,
-        filters: {'IDSESION': idSesion},
+        filters: {'idsesion': idSesion},
       );
       if (result == null) return null;
       return SesionEntity.fromJson(result);
@@ -63,9 +63,9 @@ class SessionRemoteDataSource {
       final result = await SupabaseService.select(
         table: Entities.TSEGSESION.tableName,
         filters: {
-          'IDUSUARIO': idUsuario,
-          'FECHAINICIO_gte': fechaDesde.toIso8601String(),
-          'FECHAINICIO_lte': fechaHasta.toIso8601String(),
+          'idusuario': idUsuario,
+          'fechainicio_gte': fechaDesde.toIso8601String(),
+          'fechainicio_lte': fechaHasta.toIso8601String(),
         },
       );
       return result.map((json) => SesionEntity.fromJson(json)).toList();

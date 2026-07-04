@@ -33,42 +33,39 @@ class TfinMovimientoEntity {
 
   factory TfinMovimientoEntity.fromJson(Map<String, dynamic> json) {
     return TfinMovimientoEntity(
-      idMovimiento: json['IDMOVIMIENTO'],
-      idSucursal: json['IDSUCURSAL'] ?? 0,
-      tipo: json['TIPO'],
-      categoria: json['CATEGORIA'],
-      descripcion: json['DESCRIPCION'],
-      monto: (json['MONTO'] as num?)?.toDouble(),
-      fecha: json['FECHA'] != null ? DateTime.parse(json['FECHA']) : null,
-      referencia: json['REFERENCIA'],
-      estado: json['ESTADO'],
-      comentario: json['COMENTARIO'],
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idMovimiento: json['idmovimiento'],
+      idSucursal: json['idsucursal'] ?? 0,
+      tipo: json['tipo'],
+      categoria: json['categoria'],
+      descripcion: json['descripcion'],
+      monto: (json['monto'] as num?)?.toDouble(),
+      fecha: json['fecha'] != null ? DateTime.parse(json['fecha']) : null,
+      referencia: json['referencia'],
+      estado: json['estado'],
+      comentario: json['comentario'],
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDMOVIMIENTO': idMovimiento,
-      'IDSUCURSAL': idSucursal,
-      'TIPO': tipo,
-      'CATEGORIA': categoria,
-      'DESCRIPCION': descripcion,
-      'MONTO': monto,
-      'FECHA': fecha?.toIso8601String(),
-      'REFERENCIA': referencia,
-      'ESTADO': estado,
-      'COMENTARIO': comentario,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idmovimiento': idMovimiento,
+      'idsucursal': idSucursal,
+      'tipo': tipo,
+      'categoria': categoria,
+      'descripcion': descripcion,
+      'monto': monto,
+      'fecha': fecha?.toIso8601String(),
+      'referencia': referencia,
+      'estado': estado,
+      'comentario': comentario,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

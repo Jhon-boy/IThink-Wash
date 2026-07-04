@@ -22,18 +22,18 @@ class UsuariosRemoteDataSource {
     DateTime? fechaHasta,
   }) async {
     try {
-      final filters = <String, dynamic>{'IDSUCURSAL': idSucursal};
+      final filters = <String, dynamic>{'idsucursal': idSucursal};
       if (fechaDesde != null) {
-        filters['FCREACION_gte'] = fechaDesde.toIso8601String();
+        filters['fcreacion_gte'] = fechaDesde.toIso8601String();
       }
       if (fechaHasta != null) {
-        filters['FCREACION_lte'] = fechaHasta.toIso8601String();
+        filters['fcreacion_lte'] = fechaHasta.toIso8601String();
       }
 
       final result = await SupabaseService.select(
         table: Entities.TSEGUSUARIO.tableName,
         filters: filters,
-        orderBy: 'FCREACION',
+        orderBy: 'fcreacion',
         ascending: false,
       );
       return result.map((json) => TsegUsuarioEntity.fromJson(json)).toList();
@@ -46,7 +46,7 @@ class UsuariosRemoteDataSource {
     try {
       final result = await SupabaseService.selectSingle(
         table: Entities.TSEGUSUARIO.tableName,
-        filters: {'IDUSUARIO': idUsuario},
+        filters: {'idusuario': idUsuario},
       );
       if (result == null) return null;
       return TsegUsuarioEntity.fromJson(result);
@@ -60,7 +60,7 @@ class UsuariosRemoteDataSource {
     try {
       final result = await SupabaseService.selectSingle(
         table: Entities.TSEGUSUARIO.tableName,
-        filters: {'IDENTIFICACION': identificacion},
+        filters: {'identificacion': identificacion},
       );
       if (result == null) return null;
       return TsegUsuarioEntity.fromJson(result);
@@ -72,8 +72,8 @@ class UsuariosRemoteDataSource {
   Future<TsegUsuarioEntity> createUsuario(TsegUsuarioEntity usuario) async {
     try {
       final data = usuario.toJson();
-      if (data.containsKey('IDUSUARIO') && data['IDUSUARIO'] == 0) {
-        data.remove('IDUSUARIO');
+      if (data.containsKey('idusuario') && data['idusuario'] == 0) {
+        data.remove('idusuario');
       }
       final result = await SupabaseService.insert(
         table: Entities.TSEGUSUARIO.tableName,
@@ -91,7 +91,7 @@ class UsuariosRemoteDataSource {
       final result = await SupabaseService.update(
         table: Entities.TSEGUSUARIO.tableName,
         data: data,
-        filters: {'IDUSUARIO': idUsuario},
+        filters: {'idusuario': idUsuario},
         returnData: true,
       );
       return TsegUsuarioEntity.fromJson(result.first);
@@ -106,8 +106,8 @@ class UsuariosRemoteDataSource {
       // Aquí podrías validar oldPassword si tu lógica lo requiere
       final result = await SupabaseService.update(
         table: Entities.TSEGUSUARIO.tableName,
-        data: {'PASSWORD': newPassword},
-        filters: {'IDUSUARIO': idUsuario},
+        data: {'password': newPassword},
+        filters: {'idusuario': idUsuario},
       );
       return result.isNotEmpty;
     } catch (e) {
@@ -119,8 +119,8 @@ class UsuariosRemoteDataSource {
     try {
       final result = await SupabaseService.update(
         table: Entities.TSEGUSUARIO.tableName,
-        data: {'PASSWORD': newPassword},
-        filters: {'IDUSUARIO': idUsuario},
+        data: {'password': newPassword},
+        filters: {'idusuario': idUsuario},
       );
       return result.isNotEmpty;
     } catch (e) {
@@ -133,8 +133,8 @@ class UsuariosRemoteDataSource {
     try {
       final result = await SupabaseService.update(
         table: Entities.TSEGUSUARIO.tableName,
-        data: {'ESTADO': activo ? 'ACTIVO' : 'INACTIVO'},
-        filters: {'IDUSUARIO': idUsuario},
+        data: {'estado': activo ? 'ACTIVO' : 'INACTIVO'},
+        filters: {'idusuario': idUsuario},
         returnData: true,
       );
       return TsegUsuarioEntity.fromJson(result.first);

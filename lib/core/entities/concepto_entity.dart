@@ -29,38 +29,35 @@ class TserConceptoEntity {
 
   factory TserConceptoEntity.fromJson(Map<String, dynamic> json) {
     return TserConceptoEntity(
-      idConcepto: json['IDCONCEPTO'],
-      nombre: json['NOMBRE'] ?? '',
-      descripcion: json['DESCRIPCION'],
-      tipoCobro: json['TIPOCOBRO'] ?? '',
-      unidadMedida: json['UNIDADMEDIDA'],
-      precioBase: (json['PRECIOBASE'] as num?)?.toDouble() ?? 0.0,
-      estado: json['ESTADO'] ?? 'ACTIVO',
-      imagen: json['IMAGEN'],
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idConcepto: json['idconcepto'],
+      nombre: json['nombre'] ?? '',
+      descripcion: json['descripcion'],
+      tipoCobro: json['tipocobro'] ?? '',
+      unidadMedida: json['unidadmedida'],
+      precioBase: (json['preciobase'] as num?)?.toDouble() ?? 0.0,
+      estado: json['estado'] ?? 'ACTIVO',
+      imagen: json['imagen'],
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDCONCEPTO': idConcepto,
-      'NOMBRE': nombre,
-      'DESCRIPCION': descripcion,
-      'TIPOCOBRO': tipoCobro,
-      'UNIDADMEDIDA': unidadMedida,
-      'PRECIOBASE': precioBase,
-      'ESTADO': estado,
-      'IMAGEN': imagen,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idconcepto': idConcepto,
+      'nombre': nombre,
+      'descripcion': descripcion,
+      'tipocobro': tipoCobro,
+      'unidadmedida': unidadMedida,
+      'preciobase': precioBase,
+      'estado': estado,
+      'imagen': imagen,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

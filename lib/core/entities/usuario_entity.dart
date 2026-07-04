@@ -27,36 +27,33 @@ class TsegUsuarioEntity {
 
   factory TsegUsuarioEntity.fromJson(Map<String, dynamic> json) {
     return TsegUsuarioEntity(
-      idUsuario: json['IDUSUARIO'] as int,
-      idSucursal: json['IDSUCURSAL'] as int,
-      idPersona: json['IDPERSONA'] as int,
-      usuario: json['USUARIO'],
-      password: json['PASSWORD'],
-      temporal: json['TEMPORAL'],
-      estado: json['ESTADO'] ?? 'ACTIVO',
-      fCreacion:
-          json['FCREACION'] != null ? DateTime.parse(json['FCREACION']) : null,
-      fModificacion: json['FMODIFICACION'] != null
-          ? DateTime.parse(json['FMODIFICACION'])
-          : null,
-      usuarioCreacion: json['USUARIOCREACION'],
-      usuarioModificacion: json['USUARIOMODIFICACION'],
+      idUsuario: json['idusuario'] as int,
+      idSucursal: json['idsucursal'] as int,
+      idPersona: json['idpersona'] as int,
+      usuario: json['usuario'],
+      password: json['password'],
+      temporal: json['temporal'],
+      estado: json['estado'] ?? 'ACTIVO',
+      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      usuarioCreacion: json['usuariocreacion'],
+      usuarioModificacion: json['usuariomodificacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'IDUSUARIO': idUsuario,
-      'IDSUCURSAL': idSucursal,
-      'IDPERSONA': idPersona,
-      'USUARIO': usuario,
-      'PASSWORD': password,
-      'TEMPORAL': temporal,
-      'ESTADO': estado,
-      'FCREACION': fCreacion?.toIso8601String(),
-      'FMODIFICACION': fModificacion?.toIso8601String(),
-      'USUARIOCREACION': usuarioCreacion,
-      'USUARIOMODIFICACION': usuarioModificacion,
+      'idusuario': idUsuario,
+      'idsucursal': idSucursal,
+      'idpersona': idPersona,
+      'usuario': usuario,
+      'password': password,
+      'temporal': temporal,
+      'estado': estado,
+      'fcreacion': fCreacion?.toIso8601String(),
+      'fmodificacion': fModificacion?.toIso8601String(),
+      'usuariocreacion': usuarioCreacion,
+      'usuariomodificacion': usuarioModificacion,
     };
   }
 }

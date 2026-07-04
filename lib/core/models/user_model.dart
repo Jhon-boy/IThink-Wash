@@ -54,50 +54,56 @@ class UserModel {
     this.userModificacionPersona,
   });
 
-  // ==== Factory desde JSON combinado ====
   factory UserModel.fromJson({
     required Map<String, dynamic> usuarioJson,
     required Map<String, dynamic> personaJson,
   }) {
     return UserModel(
-      // TPERSONA obligatorios
-      nombres: personaJson['NOMBRES'] ?? '',
-      apellidos: personaJson['APELLIDOS'] ?? '',
+      nombres: personaJson['nombres'] ?? personaJson['NOMBRES'] ?? '',
+      apellidos: personaJson['apellidos'] ?? personaJson['APELLIDOS'] ?? '',
 
-      // TUSUARIO
-      idUsuario: usuarioJson['IDUSUARIO'],
-      idSucursal: usuarioJson['IDSUCURSAL'],
-      usuario: usuarioJson['USUARIO'],
-      password: usuarioJson['PASSWORD'],
-      temporal: usuarioJson['TEMPORAL'],
-      fCreacionUsuario: usuarioJson['FCREACION'] != null
-          ? DateTime.parse(usuarioJson['FCREACION'])
-          : null,
-      fModificacionUsuario: usuarioJson['FMODIFICACION'] != null
-          ? DateTime.parse(usuarioJson['FMODIFICACION'])
-          : null,
-      usuarioIngreso: usuarioJson['USUARIOINGRESO'],
-      userModificacion: usuarioJson['USERMODIFICACION'],
+      idUsuario: usuarioJson['idusuario'] ?? usuarioJson['IDUSUARIO'],
+      idSucursal: usuarioJson['idsucursal'] ?? usuarioJson['IDSUCURSAL'],
+      usuario: usuarioJson['usuario'] ?? usuarioJson['USUARIO'],
+      password: usuarioJson['password'] ?? usuarioJson['PASSWORD'],
+      temporal: usuarioJson['temporal'] ?? usuarioJson['TEMPORAL'],
+      fCreacionUsuario: usuarioJson['fcreacion'] != null
+          ? DateTime.parse(usuarioJson['fcreacion'])
+          : usuarioJson['FCREACION'] != null
+              ? DateTime.parse(usuarioJson['FCREACION'])
+              : null,
+      fModificacionUsuario: usuarioJson['fmodificacion'] != null
+          ? DateTime.parse(usuarioJson['fmodificacion'])
+          : usuarioJson['FMODIFICACION'] != null
+              ? DateTime.parse(usuarioJson['FMODIFICACION'])
+              : null,
+      usuarioIngreso: usuarioJson['usuariocreacion'] ?? usuarioJson['USUARIOINGRESO'],
+      userModificacion: usuarioJson['usuariomodificacion'] ?? usuarioJson['USERMODIFICACION'],
 
-      // TPERSONA
-      identificacion: personaJson['IDENTIFICACION'],
-      fnacimiento: personaJson['FNACIMIENTO'] != null
-          ? DateTime.parse(personaJson['FNACIMIENTO'])
-          : null,
-      genero: personaJson['GENERO'],
-      correo: personaJson['CORREO'],
-      telefono: personaJson['TELEFONO'],
-      direccion: personaJson['DIRECCION'],
-      tipoIdentificacion: personaJson['TIPOIDENTIFICACION'],
-      estadoPersona: personaJson['ESTADO'],
-      fCreacionPersona: personaJson['FCREACION'] != null
-          ? DateTime.parse(personaJson['FCREACION'])
-          : null,
-      fModificacionPersona: personaJson['FMODIFICACION'] != null
-          ? DateTime.parse(personaJson['FMODIFICACION'])
-          : null,
-      usuarioIngresoPersona: personaJson['USUARIOINGRESO'],
-      userModificacionPersona: personaJson['USERMODIFICACION'],
+      identificacion: personaJson['identificacion'] ?? personaJson['IDENTIFICACION'],
+      fnacimiento: personaJson['fnacimiento'] != null
+          ? DateTime.parse(personaJson['fnacimiento'])
+          : personaJson['FNACIMIENTO'] != null
+              ? DateTime.parse(personaJson['FNACIMIENTO'])
+              : null,
+      genero: personaJson['genero'] ?? personaJson['GENERO'],
+      correo: personaJson['correo'] ?? personaJson['CORREO'],
+      telefono: personaJson['telefono'] ?? personaJson['TELEFONO'],
+      direccion: personaJson['direccion'] ?? personaJson['DIRECCION'],
+      tipoIdentificacion: personaJson['tipoidentificacion'] ?? personaJson['TIPOIDENTIFICACION'],
+      estadoPersona: personaJson['estado'] ?? personaJson['ESTADO'],
+      fCreacionPersona: personaJson['fcreacion'] != null
+          ? DateTime.parse(personaJson['fcreacion'])
+          : personaJson['FCREACION'] != null
+              ? DateTime.parse(personaJson['FCREACION'])
+              : null,
+      fModificacionPersona: personaJson['fmodificacion'] != null
+          ? DateTime.parse(personaJson['fmodificacion'])
+          : personaJson['FMODIFICACION'] != null
+              ? DateTime.parse(personaJson['FMODIFICACION'])
+              : null,
+      usuarioIngresoPersona: personaJson['usuariocreacion'] ?? personaJson['USUARIOINGRESO'],
+      userModificacionPersona: personaJson['usuariomodificacion'] ?? personaJson['USERMODIFICACION'],
     );
   }
 
