@@ -7,7 +7,7 @@ import 'package:ithinkwash/core/network/http_client.dart';
 import 'package:ithinkwash/core/services/supabase_service.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/shared/enums/entities.dart';
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PersonasRemoteDataSource {
@@ -31,7 +31,7 @@ class PersonasRemoteDataSource {
 
       // Solo filtrar por estado activo si includeDeletes es false
       if (!includeDeletes) {
-        filters['estado'] = EstadosPersona.ACTIVO.state;
+        filters['estado'] = EstadosGeneral.ACTIVO.state;
       }
 
       if (fechaDesde != null) {
@@ -59,8 +59,8 @@ class PersonasRemoteDataSource {
       final result = await SupabaseService.selectSingle(
         table: Entities.TPERPERSONA.tableName,
         filters: {
-          'identificacion': idPersona,
-         // 'ESTADO': EstadosPersona.ACTIVO.state,
+          'idpersona': idPersona,
+          // 'ESTADO': EstadosGeneral.ACTIVO.state,
         },
       );
       if (result == null) return null;
@@ -108,7 +108,7 @@ class PersonasRemoteDataSource {
   Future<bool> deletePersona(String idPersona, UserModel? user) async {
     try {
       final data = {
-        'ESTADO': EstadosPersona.INACTIVO.state,
+        'ESTADO': EstadosGeneral.INACTIVO.state,
         'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
       };
 

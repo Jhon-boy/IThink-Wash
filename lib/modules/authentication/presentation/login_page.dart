@@ -354,7 +354,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             labelStyle: const TextStyle(color: ThemeApp.apple),
                             hintText: "Ingresa tu usuario",
                             prefixIcon: Icon(Icons.person_outline,
-                                color: Colors.red.shade700),
+                                color: ThemeApp.primary.withOpacity(0.8)),
                             filled: true,
                             fillColor: Colors.white,
                             counterText: "",
@@ -385,7 +385,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             labelStyle: const TextStyle(color: ThemeApp.apple),
                             hintText: "Ingresa tu contraseña",
                             prefixIcon: Icon(Icons.lock_outline,
-                                color: Colors.red.shade700),
+                                color: ThemeApp.primary.withOpacity(0.8)),
                             filled: true,
                             fillColor: Colors.white,
                             suffixIcon: IconButton(

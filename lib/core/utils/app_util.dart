@@ -9,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ithinkwash/modules/authentication/domain/providers/user_provider.dart';
 import 'package:ithinkwash/modules/main/presentation/main_page.dart';
 import 'package:ithinkwash/modules/notification/providers/notification_provider.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
+import 'package:ithinkwash/shared/enums/estados_orden.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:ithinkwash/app/providers/provider.dart';
@@ -198,9 +200,16 @@ class AppUtils {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
   }
 
-  // Formateador de Dinero conn dos decimales
   static String formatMoney(double amount) {
     return amount.toStringAsFixed(2);
+  }
+
+  static Color getColorEstado(String estado, {bool isPerson = false}) {
+    return isPerson ? EstadosGeneral.getColorFromState(estado) : EstadosOrden.getColorFromCode(estado);
+  }
+
+  static String getLabelEstado(String estado, {bool isPerson = false}) {
+    return isPerson ? EstadosGeneral.getLabelFromState(estado) : EstadosOrden.getLabelFromCode(estado);
   }
 
   // Metodo de cerrar sesion

@@ -1,8 +1,8 @@
 import 'package:ithinkwash/core/entities/persona_entity.dart';
 import 'package:ithinkwash/core/models/user_model.dart';
 import 'package:ithinkwash/core/singleton/singleton_app.dart';
-import 'package:ithinkwash/core/utils/app_util.dart'; 
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/core/utils/app_util.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 
 class PersonaMapper {
   static PersonaEntity fromFormData({
@@ -57,7 +57,7 @@ class PersonaMapper {
       'DIRECCION':
           direccion?.trim().isNotEmpty == true ? direccion!.trim() : null,
       'TIPOIDENTIFICACION': tipoIdentificacion,
-      'ESTADO': estado ?? EstadosPersona.ACTIVO.state,
+      'ESTADO': estado ?? EstadosGeneral.ACTIVO.state,
       'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
       'USERMODIFICACION': userModificacion.toString(),
     };
@@ -66,7 +66,7 @@ class PersonaMapper {
   static Map<String, dynamic> deletePersona(UserModel user) {
     final usuario = SingletonApp.getUser();
     return {
-      'ESTADO': EstadosPersona.INACTIVO.state,
+      'ESTADO': EstadosGeneral.INACTIVO.state,
       'FMODIFICACION': AppUtils.getFechaActual().toIso8601String(),
       'USERMODIFICACION': usuario!.idUsuario?.toString(),
     };

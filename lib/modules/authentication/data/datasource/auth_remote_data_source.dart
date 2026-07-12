@@ -11,9 +11,8 @@ import 'package:ithinkwash/core/services/enhanced_auth_service.dart';
 import 'package:ithinkwash/core/services/supabase_service.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/shared/enums/entities.dart';
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 class AuthRemoteDataSourceImpl {
   final HttpClient client;
@@ -57,7 +56,6 @@ class AuthRemoteDataSourceImpl {
           message: "Error obteniendo datos de persona: ${e.toString()}");
     }
   }
-
 
   /// Verifica si un dispositivo es de confianza
   Future<UserModel?> isTrustedDevice(DeviceInfoModel deviceInfo) async {
@@ -128,22 +126,22 @@ class AuthRemoteDataSourceImpl {
             "No se encontraron datos de persona para idpersona ${userRecord['idpersona']}",
       );
     }
-    if (personaRecord['estado'] == EstadosPersona.INACTIVO.state) {
+    if (personaRecord['estado'] == EstadosGeneral.INACTIVO.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado inactivo",
       );
     }
-    if (personaRecord['estado'] == EstadosPersona.BLOQUEADO.state) {
+    if (personaRecord['estado'] == EstadosGeneral.BLOQUEADO.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado bloqueado",
       );
     }
-    if (personaRecord['estado'] == EstadosPersona.SUSPENDIDO.state) {
+    if (personaRecord['estado'] == EstadosGeneral.SUSPENDIDO.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado suspendido",
       );
     }
-    if (personaRecord['estado'] == EstadosPersona.PENDIENTE.state) {
+    if (personaRecord['estado'] == EstadosGeneral.PENDIENTE.state) {
       throw ServerException(
         message: "Inicio de sesión no permitido: Estado pendiente",
       );

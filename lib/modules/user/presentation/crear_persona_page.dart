@@ -22,7 +22,7 @@ import 'package:ithinkwash/shared/widgets/custom_dropdown.dart';
 import 'package:ithinkwash/shared/widgets/dialog_widget.dart';
 import 'package:ithinkwash/shared/widgets/input_search_widget.dart';
 import 'package:ithinkwash/shared/widgets/persona_card_widget.dart';
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 
 class CrearPersonaPage extends ConsumerStatefulWidget {
   final String? titulo;
@@ -133,12 +133,12 @@ class _CrearPersonaPageState extends ConsumerState<CrearPersonaPage> {
       _fechaNacimiento = persona.fechaNacimiento;
       _generoSeleccionado = AppUtils.mapearGeneroDesdeBD(persona.genero);
       _tipoIdentificacionSeleccionado = persona.tipoIdentificacion;
-      _estadoSeleccionado = persona.estado ?? EstadosPersona.ACTIVO.state;
+      _estadoSeleccionado = persona.estado ?? EstadosGeneral.ACTIVO.state;
     } else if (widget.identificacion != null) {
       _identificacionController.text = widget.identificacion!;
       _tipoIdentificacionSeleccionado = _tipoIdentificaciones[0];
     } else {
-      _estadoSeleccionado = EstadosPersona.ACTIVO.state;
+      _estadoSeleccionado = EstadosGeneral.ACTIVO.state;
       _tipoIdentificacionSeleccionado = _tipoIdentificaciones[0];
     }
   }
@@ -325,7 +325,7 @@ class _CrearPersonaPageState extends ConsumerState<CrearPersonaPage> {
       telefono: _telefonoController.text,
       direccion: _direccionController.text,
       tipoIdentificacion: _tipoIdentificacionSeleccionado,
-      estado: _estadoSeleccionado ?? EstadosPersona.ACTIVO.state,
+      estado: _estadoSeleccionado ?? EstadosGeneral.ACTIVO.state,
     );
   }
 
@@ -726,10 +726,10 @@ class _CrearPersonaPageState extends ConsumerState<CrearPersonaPage> {
                         value: _estadoSeleccionado,
                         label: 'Estado',
                         hint: 'Seleccione el estado',
-                        items: EstadosPersona.allStates,
+                        items: EstadosGeneral.allStates,
                         displayText: (item) => item,
                         subtitleText: (item) =>
-                            EstadosPersona.getLabelFromState(item),
+                            EstadosGeneral.getLabelFromState(item),
                         onChanged: (value) {
                           setState(() {
                             _estadoSeleccionado = value;

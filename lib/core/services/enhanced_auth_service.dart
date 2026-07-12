@@ -6,7 +6,7 @@ import 'package:ithinkwash/core/errors/exception.dart';
 import 'package:ithinkwash/core/models/user_model.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/shared/enums/entities.dart';
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -194,19 +194,19 @@ class EnhancedAuthService {
   }
 
   static void _validatePersonaEstado(PersonaEntity persona) {
-    if (persona.estado == EstadosPersona.INACTIVO.state) {
+    if (persona.estado == EstadosGeneral.INACTIVO.state) {
       throw ServerException(
           message: "Inicio de sesión no permitido: Estado inactivo");
     }
-    if (persona.estado == EstadosPersona.BLOQUEADO.state) {
+    if (persona.estado == EstadosGeneral.BLOQUEADO.state) {
       throw ServerException(
           message: "Inicio de sesión no permitido: Estado bloqueado");
     }
-    if (persona.estado == EstadosPersona.SUSPENDIDO.state) {
+    if (persona.estado == EstadosGeneral.SUSPENDIDO.state) {
       throw ServerException(
           message: "Inicio de sesión no permitido: Estado suspendido");
     }
-    if (persona.estado == EstadosPersona.PENDIENTE.state) {
+    if (persona.estado == EstadosGeneral.PENDIENTE.state) {
       throw ServerException(
           message: "Inicio de sesión no permitido: Estado pendiente");
     }

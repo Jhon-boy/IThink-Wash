@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ithinkwash/core/entities/orden_entity.dart';
 import 'package:ithinkwash/core/singleton/singleton_app.dart';
 import 'package:ithinkwash/core/theme_app.dart';
 import 'package:ithinkwash/modules/authentication/domain/providers/user_provider.dart';
 import 'package:ithinkwash/modules/main/presentation/widget/no_producto_widget.dart';
+import 'package:ithinkwash/modules/ordenes/data/datasource/orden_remote_datasource.dart';
+import 'package:ithinkwash/modules/ordenes/data/repository/orden_repository.dart';
+import 'package:ithinkwash/modules/ordenes/domain/providers/orden_notifier.dart';
+import 'package:ithinkwash/modules/ordenes/domain/repository/orden_repository.dart';
+import 'package:ithinkwash/modules/ordenes/presentation/orden_detalle_page.dart';
+import 'package:ithinkwash/modules/ordenes/presentation/widgets/orden_card_widget.dart';
+import 'package:ithinkwash/shared/widgets/dialog_widget.dart';
 import 'package:ithinkwash/shared/widgets/shimer_producto.dart';
-import 'package:ithinkwash/core/utils/responsive_util.dart';
 
 class InicioPage extends ConsumerStatefulWidget {
   final Function(int)? onSectionChange;
@@ -17,67 +24,57 @@ class InicioPage extends ConsumerStatefulWidget {
 }
 
 class _InicioPageState extends ConsumerState<InicioPage> {
-
   bool _isLoading = true;
-
+  late final OrdenRepository repository;
+  List<TordOrdenEntity> _ordenes = [];
 
   @override
   void initState() {
     super.initState();
-    loadData();
+    repository = OrdenRemoteRepository(OrdenRemoteDataSource(ref: ref));
+    _cargarOrdenes();
   }
 
-  Future<void> loadData() async {
-    setState(() => _isLoading = true);
-
-
-    setState(() {
-      _isLoading = false;
-    });
+  void _cargarOrdenes() {
+    final idSucursal = SingletonApp.getUser()?.idSucursal ?? 1;
+    final todas = ref.read(orderProvider.notifier).getOrdenesPorSucursal(idSucursal);
+    _ordenes = todas..sort((a, b) => b.fechaRecepcion.compareTo(a.fechaRecepcion));
+    _isLoading = false;
   }
 
-  Future<void> _refreshProductos() async {
+  Future<void> _refreshOrdenes() async {
     setState(() => _isLoading = true);
 
     final idSucursal =
         ref.read(userProvider.notifier).getUser()?.idSucursal ?? 1;
 
-    /*final result = await _productosRepository.getProductos(idSucursal);
+    final result = await repository.getOrdenesBySucursalEntity(idSucursal);
+
     result.fold(
-      (_) {
+      (failure) {
         if (mounted) {
           DialogHelper.error(context,
-              message: "Error el actualizar los productos", onConfirmed: () {});
+              message: 'Error al obtener las órdenes: ${failure.message}',
+              onConfirmed: () {});
         }
       },
-      (productos) {
-        ref.read(diningProvider.notifier).setProductos(productos);
+      (ordenes) {
         if (mounted) {
-          setState(() {
-            _productos = productos.where((p) => p.isDisponible).toList();
-            _isLoading = false;
-          });
-          _refreshPorciones();
+          ref.read(orderProvider.notifier).setOrdenes(ordenes);
+          _ordenes = ordenes
+            ..sort((a, b) => b.fechaRecepcion.compareTo(a.fechaRecepcion));
+          setState(() => _isLoading = false);
         }
-      }
-    );*/
+      },
+    );
   }
 
-  Future<void> _refreshPorciones() async {
-    final idSucursal = SingletonApp.getUser()?.idSucursal ?? 1;
-    setState(() => _isLoading = true);
-    /*final result = await _productosRepository.getPorciones(idSucursal);
-    result.fold((error) {
-      debugPrint("Error al obtener las porciones: ${error.message}");
-      setState(() {
-        _isLoading = false;
-      });
-    }, (porciones) {
-      ref.read(diningProvider.notifier).setPorciones(porciones);
-      setState(() {
-        _isLoading = false;
-      });
-    });*/
+  void _abrirDetalle(TordOrdenEntity orden) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => OrdenDetallePage(orden: orden),
+      ),
+    );
   }
 
   @override
@@ -86,94 +83,47 @@ class _InicioPageState extends ConsumerState<InicioPage> {
       return const ShimmerLoader();
     }
 
-    if (true) {
+    if (_ordenes.isEmpty) {
       return RefreshIndicator(
         color: ThemeApp.primary,
-        onRefresh: _refreshProductos,
+        onRefresh: _refreshOrdenes,
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.all(16.0),
           children: const [
+            SizedBox(height: 100),
             NoProductosWidget(
               message:
-                  'No existen productos para esta sucursal. Por favor, contacte con el administrador.',
+                  'No existen órdenes para esta sucursal.',
             ),
           ],
         ),
       );
     }
-  }
-}
 
-class _InicioContent extends StatelessWidget {
-  final Function(int)? onSectionChange;
-  const _InicioContent({
-    this.onSectionChange,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Productos del día',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 20),
-          const SizedBox(height: 10),
-          const Row(
-            children: [
-              Expanded(
-                child: Divider(
-                  color: ThemeApp.textSecondary,
-                  thickness: 1,
-                ),
+    return RefreshIndicator(
+      color: ThemeApp.primary,
+      onRefresh: _refreshOrdenes,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(16),
+        itemCount: _ordenes.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                'Órdenes del día',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  "Mas productos",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: ThemeApp.textSecondary,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Divider(
-                  color: ThemeApp.textSecondary,
-                  thickness: 1,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-           // itemCount: productos.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: ResponsiveUtil.columnsForGrid(
-                context,
-                minTileWidth: 200,
-                minColumns: 2,
-                maxColumns: 6,
-              ),
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 16,
-              childAspectRatio: 0.85,
-            ),
-            itemBuilder: (context, index) {
-          
-               
-            },
-          ),
-        ],
+            );
+          }
+          final orden = _ordenes[index - 1];
+          return OrdenCardWidget(
+            orden: orden,
+            onTap: () => _abrirDetalle(orden),
+          );
+        },
       ),
     );
   }

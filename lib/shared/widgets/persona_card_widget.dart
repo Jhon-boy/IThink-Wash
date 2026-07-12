@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ithinkwash/core/theme_app.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/core/entities/persona_entity.dart';
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:ithinkwash/shared/widgets/custom_buttom.dart';
 
 class PersonaCardWidget extends StatelessWidget {
@@ -158,9 +158,9 @@ class PersonaCardWidget extends StatelessWidget {
                       context,
                       icon: Icons.info,
                       label: 'Estado',
-                      value: EstadosPersona.getLabelFromState(persona.estado!),
+                      value: EstadosGeneral.getLabelFromState(persona.estado!),
                       valueColor:
-                          EstadosPersona.getColorFromState(persona.estado!),
+                          EstadosGeneral.getColorFromState(persona.estado!),
                     ),
                     const SizedBox(height: 16),
                   ],

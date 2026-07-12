@@ -3,24 +3,24 @@
 import 'package:flutter/material.dart';
 import 'package:ithinkwash/core/theme_app.dart';
 
-enum EstadosPersona {
-  ACTIVO("ACTIVO", "Activo"),
-  BLOQUEADO("BLOQUEADO", "Bloqueado"),
-  SUSPENDIDO("SUSPENDIDO", "Suspendido"),
-  PENDIENTE("PENDIENTE", "Pendiente"),
-  INACTIVO("INACTIVO", "Inactivo");
+enum EstadosGeneral {
+  ACTIVO("ACT", "Activo"),
+  BLOQUEADO("BLO", "Bloqueado"),
+  SUSPENDIDO("SUS", "Suspendido"),
+  PENDIENTE("PEN", "Pendiente"),
+  INACTIVO("INA", "Inactivo");
 
   final String state;
   final String label;
-  const EstadosPersona(this.state, this.label);
+  const EstadosGeneral(this.state, this.label);
 
   /// Obtener lista de todos los estados de persona para dropdown
-  static List<EstadosPersona> get all => EstadosPersona.values;
+  static List<EstadosGeneral> get all => EstadosGeneral.values;
   static List<String> get allStates => all.map((e) => e.state).toList();
   String get getState => state.toUpperCase();
   String get getLabel => label.toUpperCase();
   Color get getColor =>
-      state == EstadosPersona.ACTIVO.state ? ThemeApp.success : ThemeApp.error;
+      state == EstadosGeneral.ACTIVO.state ? ThemeApp.success : ThemeApp.error;
   static String getLabelFromState(String state) {
     return all.firstWhere((e) => e.state == state).label;
   }

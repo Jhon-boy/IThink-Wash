@@ -14,6 +14,9 @@ abstract class PersonasRepository {
   /// Obtener persona por identificación
   Future<Either<Failure, PersonaEntity>> getPersonaByIdentificacion(
       String identificacion);
+  
+  // Obtener persona por ID
+  Future<Either<Failure, PersonaEntity>> getPersonaById(int idPersona);
 
   /// Crear una nueva persona
   Future<Either<Failure, PersonaEntity>> createPersona(

@@ -149,4 +149,22 @@ class PersonaRepositoryImpl implements PersonasRepository {
           ServerFailure('Ha ocurrido un error, inténtalo más tarde'));
     }
   }
+  
+  @override
+  Future<Either<Failure, PersonaEntity>> getPersonaById(int idPersona) async {
+    final isConnected = await _connectivity.checkConnection();
+    if (!isConnected) {
+      return const Left(NetworkFailure('No hay conexión a internet'));
+    }
+    try {
+      final persona = await remote.getPersonaById(idPersona.toString());
+      if (persona == null) {
+        return const Left(ServerFailure('Persona no encontrada'));
+      }
+      return Right(persona);
+    } catch (_) {
+      return const Left(
+          ServerFailure('Ha ocurrido un error, inténtalo más tarde'));
+    }
+  }
 }

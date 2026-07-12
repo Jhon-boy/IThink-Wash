@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ithinkwash/core/entities/rol_entity.dart';
 import 'package:ithinkwash/core/models/empleados_model.dart';
 import 'package:ithinkwash/core/theme_app.dart';
-import 'package:ithinkwash/core/utils/app_util.dart'; 
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
-import 'package:ithinkwash/shared/widgets/custom_buttom.dart'; 
+import 'package:ithinkwash/core/utils/app_util.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
+import 'package:ithinkwash/shared/widgets/custom_buttom.dart';
 
 class EmpleadoCardWidget extends StatelessWidget {
   final EmpleadoModel empleado;
@@ -201,9 +201,9 @@ class EmpleadoCardWidget extends StatelessWidget {
                       context,
                       icon: Icons.info,
                       label: 'Estado',
-                      value: EstadosPersona.getLabelFromState(
+                      value: EstadosGeneral.getLabelFromState(
                           empleado.persona.estado!),
-                      valueColor: EstadosPersona.getColorFromState(
+                      valueColor: EstadosGeneral.getColorFromState(
                           empleado.persona.estado!),
                     ),
                   ],

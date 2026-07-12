@@ -6,9 +6,9 @@ import 'package:ithinkwash/core/entities/usuario_entity.dart';
 import 'package:ithinkwash/core/errors/exception.dart';
 import 'package:ithinkwash/core/network/http_client.dart';
 import 'package:ithinkwash/core/services/supabase_service.dart';
-import 'package:ithinkwash/core/utils/app_util.dart'; 
+import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/shared/enums/entities.dart';
-import 'package:ithinkwash/shared/enums/estados_persona.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:ithinkwash/shared/enums/roles.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -39,7 +39,7 @@ class RolUsuarioRemoteDataSource {
     try {
       final rol = await SupabaseService.selectSingle(
         table: Entities.TSEGROL.tableName,
-        filters: {'codigo': codigo, 'estado': EstadosPersona.ACTIVO.state},
+        filters: {'codigo': codigo, 'estado': EstadosGeneral.ACTIVO.state},
       );
       if (rol == null) return null;
       return rol['idrol'] as int?;
@@ -100,7 +100,7 @@ class RolUsuarioRemoteDataSource {
         await SupabaseService.update(
           table: Entities.TSEGROLUSUARIO.tableName,
           data: {
-            'estado': EstadosPersona.ACTIVO.state,
+            'estado': EstadosGeneral.ACTIVO.state,
             'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
           },
           filters: {
@@ -117,7 +117,7 @@ class RolUsuarioRemoteDataSource {
         data: {
           'idusuario': idUsuario,
           'idrol': idRol,
-          'estado': EstadosPersona.ACTIVO.state,
+          'estado': EstadosGeneral.ACTIVO.state,
           'fcreacion': AppUtils.getFechaActual().toIso8601String(),
           'usuariocreacion': '0',
         },
@@ -141,7 +141,7 @@ class RolUsuarioRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TSEGROLUSUARIO.tableName,
         data: {
-          'estado': EstadosPersona.INACTIVO.state,
+          'estado': EstadosGeneral.INACTIVO.state,
           'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
           'usuariomodificacion': '0',
         },
@@ -162,7 +162,7 @@ class RolUsuarioRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TSEGROLUSUARIO.tableName,
         data: {
-          'estado': EstadosPersona.INACTIVO.state,
+          'estado': EstadosGeneral.INACTIVO.state,
           'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
           'usuariomodificacion': '0',
         },
@@ -186,7 +186,7 @@ class RolUsuarioRemoteDataSource {
         columns: 'idrol',
         filters: {
           'idusuario': idUsuario,
-          'estado': EstadosPersona.ACTIVO.state
+          'estado': EstadosGeneral.ACTIVO.state
         },
       );
       return roles.map((e) => e['idrol'] as int?).whereType<int>().toList();
@@ -215,7 +215,7 @@ class RolUsuarioRemoteDataSource {
     try {
       final result = await SupabaseService.select(
         table: Entities.TSEGROL.tableName,
-        filters: {'estado': EstadosPersona.ACTIVO.state},
+        filters: {'estado': EstadosGeneral.ACTIVO.state},
         orderBy: 'fcreacion',
         ascending: false,
       );
@@ -224,7 +224,6 @@ class RolUsuarioRemoteDataSource {
       _handleError(e, 'getRoles');
     }
   }
-
 
   Future<List<TsegUsuarioEntity>> getUsuariosSinRolCliente() async {
     try {
@@ -241,7 +240,7 @@ class RolUsuarioRemoteDataSource {
           : await SupabaseService.select(
               table: Entities.TSEGROLUSUARIO.tableName,
               columns: 'idusuario',
-              filters: {'estado': EstadosPersona.ACTIVO.state},
+              filters: {'estado': EstadosGeneral.ACTIVO.state},
             );
 
       if (rolUsuarios.isEmpty) {
