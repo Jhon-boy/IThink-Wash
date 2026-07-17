@@ -5,6 +5,7 @@ import 'package:ithinkwash/core/errors/exception.dart';
 import 'package:ithinkwash/core/network/http_client.dart';
 import 'package:ithinkwash/core/services/supabase_service.dart'; 
 import 'package:ithinkwash/shared/enums/entities.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UsuariosRemoteDataSource {
@@ -133,7 +134,7 @@ class UsuariosRemoteDataSource {
     try {
       final result = await SupabaseService.update(
         table: Entities.TSEGUSUARIO.tableName,
-        data: {'estado': activo ? 'ACTIVO' : 'INACTIVO'},
+        data: {'estado': activo ? EstadosGeneral.ACTIVO.state : EstadosGeneral.INACTIVO.state},
         filters: {'idusuario': idUsuario},
         returnData: true,
       );

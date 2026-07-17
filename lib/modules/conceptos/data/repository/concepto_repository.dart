@@ -85,4 +85,17 @@ class ConceptoRemoteRepository implements ConceptoRepository {
       return const Left(ServerFailure('Ha ocurrido un error, inténtalo más tarde'));
     }
   }
+
+  @override
+  Future<Either<Failure, TserConceptoEntity>> toggleEstadoConceptoEntity(int idConcepto, bool activo, String user) async {
+    if (!await _connectivity.checkConnection()) {
+      return const Left(NetworkFailure('No hay conexión a internet'));
+    }
+    try {
+      final result = await remote.toggleEstadoConcepto(idConcepto, activo, user);
+      return Right(result);
+    } catch (_) {
+      return const Left(ServerFailure('Ha ocurrido un error, inténtalo más tarde'));
+    }
+  }
 }

@@ -186,7 +186,7 @@ class PersonasRemoteDataSource {
     try {
       final result = await SupabaseService.update(
         table: Entities.TPERPERSONA.tableName,
-        data: {'estado': activo == true ? 'ACTIVO' : 'INACTIVO'},
+        data: {'estado': activo == true ? EstadosGeneral.ACTIVO.state : EstadosGeneral.INACTIVO.state},
         filters: {'identificacion': idPersona},
       );
       return PersonaEntity.fromJson(result.first);

@@ -8,4 +8,5 @@ abstract class ServicioAdicionalRepository {
   Future<Either<Failure, TserServicioAdicionalEntity>> registerServicioAdicionalEntity(TserServicioAdicionalEntity data);
   Future<Either<Failure, TserServicioAdicionalEntity>> updateServicioAdicionalEntity(TserServicioAdicionalEntity data);
   Future<Either<Failure, bool>> deleteServicioAdicionalEntity(int id, String user);
+  Future<Either<Failure, TserServicioAdicionalEntity>> toggleEstadoServicioAdicionalEntity(int id, bool activo, String user);
 }

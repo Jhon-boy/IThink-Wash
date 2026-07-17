@@ -55,9 +55,17 @@ class MenuItem {
   // Menús del drawer (dependientes del rol)
   static const List<MenuItem> drawerMenus = [
     MenuItem(
+      label: 'Conceptos',
+      icon: Icons.category_outlined,
+      index: 4,
+      isMainMenu: true,
+      requiresRole: true,
+      allowedRoles: ['ADM'],
+    ),
+    MenuItem(
       label: 'Clientes',
       icon: Icons.people_outline,
-      index: 4,
+      index: 5,
       isMainMenu: true,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -65,7 +73,7 @@ class MenuItem {
     MenuItem(
       label: 'Empleados',
       icon: Icons.person_pin_outlined,
-      index: 5,
+      index: 6,
       isMainMenu: true,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -73,7 +81,7 @@ class MenuItem {
     MenuItem(
       label: 'Sucursales',
       icon: Icons.inventory_outlined,
-      index: 6,
+      index: 7,
       isMainMenu: true,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -81,7 +89,7 @@ class MenuItem {
     MenuItem(
       label: 'Ordenes',
       icon: Icons.checkroom_rounded,
-      index: 7,
+      index: 8,
       isMainMenu: false,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -89,7 +97,7 @@ class MenuItem {
     MenuItem(
       label: 'Gastos',
       icon: Icons.monetization_on,
-      index: 8,
+      index: 9,
       isMainMenu: true,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -97,7 +105,7 @@ class MenuItem {
     MenuItem(
       label: 'Reportes',
       icon: Icons.data_exploration_outlined,
-      index: 9,
+      index: 10,
       isMainMenu: true,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -105,7 +113,7 @@ class MenuItem {
     MenuItem(
       label: 'Roles',
       icon: Icons.security_outlined,
-      index: 10,
+      index: 11,
       isMainMenu: false,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -113,7 +121,7 @@ class MenuItem {
     MenuItem(
       label: 'Sesiones',
       icon: Icons.phone_android_outlined,
-      index: 11,
+      index: 12,
       isMainMenu: true,
       requiresRole: true,
       allowedRoles: ['ADM'],
@@ -121,7 +129,7 @@ class MenuItem {
     MenuItem(
       label: 'Acerca de',
       icon: Icons.info_outline,
-      index: 12,
+      index: 13,
       isMainMenu: false,
       requiresRole: false,
     ),

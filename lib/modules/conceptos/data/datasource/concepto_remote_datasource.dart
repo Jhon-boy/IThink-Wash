@@ -5,6 +5,7 @@ import 'package:ithinkwash/core/network/http_client.dart';
 import 'package:ithinkwash/core/services/supabase_service.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/shared/enums/entities.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ConceptoRemoteDataSource {
@@ -62,6 +63,7 @@ class ConceptoRemoteDataSource {
   Future<TserConceptoEntity> updateConcepto(TserConceptoEntity concepto) async {
     try {
       final data = concepto.toJson();
+      data.remove('idconcepto');
       data['fmodificacion'] = AppUtils.getFechaActual().toIso8601String();
 
       final result = await SupabaseService.update(
@@ -80,7 +82,7 @@ class ConceptoRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TSERCONCEPTO.tableName,
         data: {
-          'estado': 'INACTIVO',
+          'estado': EstadosGeneral.INACTIVO.state,
           'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
           'usuariomodificacion': userModificacion,
         },
@@ -89,6 +91,24 @@ class ConceptoRemoteDataSource {
       return true;
     } catch (e) {
       _handleError(e, 'deleteConcepto');
+    }
+  }
+
+  Future<TserConceptoEntity> toggleEstadoConcepto(int idConcepto, bool activo, String user) async {
+    try {
+      final estado = activo ? EstadosGeneral.ACTIVO.state : EstadosGeneral.INACTIVO.state;
+      final result = await SupabaseService.update(
+        table: Entities.TSERCONCEPTO.tableName,
+        data: {
+          'estado': estado,
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariomodificacion': user,
+        },
+        filters: {'idconcepto': idConcepto},
+      );
+      return TserConceptoEntity.fromJson(result.first);
+    } catch (e) {
+      _handleError(e, 'toggleEstadoConcepto');
     }
   }
 

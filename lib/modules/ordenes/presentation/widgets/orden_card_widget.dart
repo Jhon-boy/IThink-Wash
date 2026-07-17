@@ -51,7 +51,6 @@ class _OrdenCardWidgetState extends ConsumerState<OrdenCardWidget> {
     final color = AppUtils.getColorEstado(o.estado);
     final estadoLabel = AppUtils.getLabelEstado(o.estado);
     final fecha = AppUtils.formatDate(o.fechaRecepcion);
-    const estilo = TextStyle(fontSize: 13, fontFamily: ThemeApp.fontFamily);
     const estiloSmall =
         TextStyle(fontSize: 12, color: ThemeApp.textSecondary, fontFamily: ThemeApp.fontFamily);
 

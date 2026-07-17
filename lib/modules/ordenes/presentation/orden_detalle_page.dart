@@ -5,7 +5,6 @@ import 'package:ithinkwash/app/providers/provider.dart';
 import 'package:ithinkwash/core/app_constants.dart';
 import 'package:ithinkwash/core/entities/orden_detalle_entity.dart';
 import 'package:ithinkwash/core/entities/orden_entity.dart';
-import 'package:ithinkwash/core/entities/pago_entity.dart';
 import 'package:ithinkwash/core/entities/persona_entity.dart';
 import 'package:ithinkwash/core/entities/sucursal_entity.dart';
 import 'package:ithinkwash/core/theme_app.dart';
@@ -401,7 +400,7 @@ class _OrdenDetallePageState extends ConsumerState<OrdenDetallePage> {
                   width: MediaQuery.of(context).size.width * 0.35,
                   text: 'WhastApp',
                   onPressed: _contactarWhatsApp,
-                  colorButton: ThemeApp.primary,
+                  colorButton: ThemeApp.success,
                   colorText: ThemeApp.white,
                   icon: FontAwesomeIcons.whatsapp),
               CustomButton(

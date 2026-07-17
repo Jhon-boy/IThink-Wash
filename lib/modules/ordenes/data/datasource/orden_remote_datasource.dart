@@ -77,6 +77,7 @@ class OrdenRemoteDataSource {
   Future<TordOrdenEntity> updateOrden(TordOrdenEntity orden) async {
     try {
       final data = orden.toJson();
+      data.remove('idorden');
       data['fmodificacion'] = AppUtils.getFechaActual().toIso8601String();
       final result = await SupabaseService.update(
         table: Entities.TORDORDEN.tableName,

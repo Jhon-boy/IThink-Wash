@@ -20,6 +20,7 @@ import 'package:ithinkwash/modules/user/domain/repository/rol_usuario.dart';
 import 'package:ithinkwash/modules/user/domain/repository/usuario_repository.dart';
 import 'package:ithinkwash/modules/user/presentation/widget/empleado_card_widget.dart';
 import 'package:ithinkwash/shared/baseApp/pantalla_base.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:ithinkwash/shared/enums/roles.dart';
 import 'package:ithinkwash/shared/widgets/custom_buttom.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
@@ -299,7 +300,7 @@ class _SucursalDetallePageState extends ConsumerState<SucursalDetallePage> {
                         ? Icons.check_circle
                         : Icons.cancel_rounded,
                     label: 'Estado',
-                    value: _sucursal.estado == true ? 'Activo' : 'Inactivo',
+                    value: _sucursal.estado == true ? EstadosGeneral.ACTIVO.state : EstadosGeneral.INACTIVO.state,
                   ),
                   if (_sucursal.fCreacion != null)
                     _buildInfoRow(

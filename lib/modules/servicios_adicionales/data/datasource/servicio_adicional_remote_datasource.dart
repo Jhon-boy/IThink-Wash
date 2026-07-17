@@ -5,6 +5,7 @@ import 'package:ithinkwash/core/network/http_client.dart';
 import 'package:ithinkwash/core/services/supabase_service.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
 import 'package:ithinkwash/shared/enums/entities.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ServicioAdicionalRemoteDataSource {
@@ -62,6 +63,7 @@ class ServicioAdicionalRemoteDataSource {
   Future<TserServicioAdicionalEntity> updateServicioAdicional(TserServicioAdicionalEntity entity) async {
     try {
       final data = entity.toJson();
+      data.remove('idservicioadicional');
       data['fmodificacion'] = AppUtils.getFechaActual().toIso8601String();
 
       final result = await SupabaseService.update(
@@ -80,7 +82,7 @@ class ServicioAdicionalRemoteDataSource {
       await SupabaseService.update(
         table: Entities.TSERSERVICIOADICIONAL.tableName,
         data: {
-          'estado': 'INACTIVO',
+          'estado': EstadosGeneral.INACTIVO.state,
           'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
           'usuariomodificacion': user,
         },
@@ -89,6 +91,24 @@ class ServicioAdicionalRemoteDataSource {
       return true;
     } catch (e) {
       _handleError(e, 'deleteServicioAdicional');
+    }
+  }
+
+  Future<TserServicioAdicionalEntity> toggleEstadoServicioAdicional(int id, bool activo, String user) async {
+    try {
+      final estado = activo ? EstadosGeneral.ACTIVO.state : EstadosGeneral.INACTIVO.state;
+      final result = await SupabaseService.update(
+        table: Entities.TSERSERVICIOADICIONAL.tableName,
+        data: {
+          'estado': estado,
+          'fmodificacion': AppUtils.getFechaActual().toIso8601String(),
+          'usuariomodificacion': user,
+        },
+        filters: {'idservicioadicional': id},
+      );
+      return TserServicioAdicionalEntity.fromJson(result.first);
+    } catch (e) {
+      _handleError(e, 'toggleEstadoServicioAdicional');
     }
   }
 
