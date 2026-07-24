@@ -77,11 +77,14 @@ class ThemeApp {
     String? Function(String?)? validator,
     bool isRequired = false,
     Color? fillColor,
+    String? helperText,
   }) {
     return InputDecoration(
       labelText: title,
       labelStyle: const TextStyle(color: ThemeApp.textPrimary),
       hintText: hint,
+      helperText: helperText,
+      helperStyle: const TextStyle(fontSize: 11, color: ThemeApp.textSecondary),
       filled: true,
       fillColor: fillColor ?? ThemeApp.inputBackground,
       border: OutlineInputBorder(

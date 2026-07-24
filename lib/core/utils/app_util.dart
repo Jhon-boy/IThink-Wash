@@ -6,20 +6,20 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ithinkwash/app/providers/provider.dart';
+import 'package:ithinkwash/core/app_constants.dart';
+import 'package:ithinkwash/core/entities/persona_entity.dart';
+import 'package:ithinkwash/core/models/deviceInfo_model.dart';
 import 'package:ithinkwash/modules/authentication/domain/providers/user_provider.dart';
 import 'package:ithinkwash/modules/main/presentation/main_page.dart';
 import 'package:ithinkwash/modules/notification/providers/notification_provider.dart';
 import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:ithinkwash/shared/enums/estados_orden.dart';
-import 'package:network_info_plus/network_info_plus.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:ithinkwash/app/providers/provider.dart';
-import 'package:ithinkwash/core/app_constants.dart';
-import 'package:ithinkwash/core/models/deviceInfo_model.dart';
-import 'package:ithinkwash/core/entities/persona_entity.dart';
 import 'package:ithinkwash/core/models/user_model.dart';
 import 'package:ithinkwash/shared/widgets/dialog_widget.dart';
 import 'package:mobile_device_identifier/mobile_device_identifier.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 //CLASE Util dedicado a la desarrollo de metodos utiles en toda la aplicacion
 // JB

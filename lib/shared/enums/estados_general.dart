@@ -8,6 +8,7 @@ enum EstadosGeneral {
   BLOQUEADO("BLO", "Bloqueado"),
   SUSPENDIDO("SUS", "Suspendido"),
   PENDIENTE("PEN", "Pendiente"),
+  COMPLETADO("COM", "Completo"),
   INACTIVO("INA", "Inactivo");
 
   final String state;

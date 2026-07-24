@@ -70,6 +70,24 @@ class PersonasRemoteDataSource {
     }
   }
 
+  /// Obtener persona por ID (solo trae personas activas - estado ACT)
+  Future<PersonaEntity?> getPersonaByIdentificacion(
+      String idetificacion) async {
+    try {
+      final result = await SupabaseService.selectSingle(
+        table: Entities.TPERPERSONA.tableName,
+        filters: {
+          'identificacion': idetificacion,
+          //'estado': EstadosGeneral.ACTIVO.state,
+        },
+      );
+      if (result == null) return null;
+      return PersonaEntity.fromJson(result);
+    } catch (e) {
+      _handleError(e, 'getPersonaById');
+    }
+  }
+
   /// Crear nueva persona
   Future<PersonaEntity> createPersona(
       PersonaEntity persona, UserModel? user) async {
@@ -186,7 +204,11 @@ class PersonasRemoteDataSource {
     try {
       final result = await SupabaseService.update(
         table: Entities.TPERPERSONA.tableName,
-        data: {'estado': activo == true ? EstadosGeneral.ACTIVO.state : EstadosGeneral.INACTIVO.state},
+        data: {
+          'estado': activo == true
+              ? EstadosGeneral.ACTIVO.state
+              : EstadosGeneral.INACTIVO.state
+        },
         filters: {'identificacion': idPersona},
       );
       return PersonaEntity.fromJson(result.first);

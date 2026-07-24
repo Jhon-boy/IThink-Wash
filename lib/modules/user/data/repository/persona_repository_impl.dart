@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ithinkwash/core/entities/persona_entity.dart';
 import 'package:ithinkwash/core/models/user_model.dart';
 import 'package:ithinkwash/core/services/conection_service.dart';
-import 'package:ithinkwash/core/utils/either.dart'; 
+import 'package:ithinkwash/core/utils/either.dart';
 import 'package:ithinkwash/modules/user/data/datasource/persona_data_source.dart';
 import 'package:ithinkwash/modules/user/domain/repository/persona_repository.dart';
 
@@ -79,7 +79,7 @@ class PersonaRepositoryImpl implements PersonasRepository {
       return const Left(NetworkFailure('No hay conexión a internet'));
     }
     try {
-      final persona = await remote.getPersonaById(identificacion);
+      final persona = await remote.getPersonaByIdentificacion(identificacion);
       if (persona == null) {
         return const Left(ServerFailure('Persona no encontrada'));
       }
@@ -149,7 +149,7 @@ class PersonaRepositoryImpl implements PersonasRepository {
           ServerFailure('Ha ocurrido un error, inténtalo más tarde'));
     }
   }
-  
+
   @override
   Future<Either<Failure, PersonaEntity>> getPersonaById(int idPersona) async {
     final isConnected = await _connectivity.checkConnection();

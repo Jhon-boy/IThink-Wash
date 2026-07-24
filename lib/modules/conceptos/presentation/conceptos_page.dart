@@ -17,6 +17,7 @@ import 'package:ithinkwash/modules/servicios_adicionales/domain/repository/servi
 import 'package:ithinkwash/modules/servicios_adicionales/presentation/servicio_adicional_form_dialog.dart';
 import 'package:ithinkwash/modules/servicios_adicionales/presentation/widgets/servicio_adicional_card_widget.dart';
 import 'package:ithinkwash/shared/baseApp/pantalla_base.dart';
+import 'package:ithinkwash/shared/enums/estados_general.dart';
 import 'package:ithinkwash/shared/widgets/dialog_widget.dart';
 import 'package:ithinkwash/shared/widgets/shimer_producto.dart';
 
@@ -134,7 +135,7 @@ class _ConceptosPageState extends ConsumerState<ConceptosPage> {
   }
 
   void _toggleConcepto(TserConceptoEntity concepto) {
-    final activo = concepto.estado.toUpperCase() == 'ACT';
+    final activo = concepto.estado.toUpperCase() == EstadosGeneral.ACTIVO.state;
     DialogHelper.confirm(context,
         message: activo
             ? '¿Desactivar concepto "${concepto.nombre}"?'
@@ -209,7 +210,7 @@ class _ConceptosPageState extends ConsumerState<ConceptosPage> {
   }
 
   void _toggleServicio(TserServicioAdicionalEntity servicio) {
-    final activo = servicio.estado.toUpperCase() == 'ACT';
+    final activo = servicio.estado.toUpperCase() == EstadosGeneral.ACTIVO.state;
     DialogHelper.confirm(context,
         message: activo
             ? '¿Desactivar servicio "${servicio.nombre}"?'

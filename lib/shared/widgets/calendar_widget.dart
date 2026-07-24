@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:ithinkwash/core/theme_app.dart';
 import 'package:ithinkwash/core/utils/app_util.dart';
+import 'package:ithinkwash/shared/widgets/time_picker_widget.dart';
 
 class CalendarWidget extends ConsumerStatefulWidget {
   final String title;
@@ -37,7 +38,32 @@ class CalendarWidget extends ConsumerStatefulWidget {
     DateTime? initialDate,
     DateTime? firstDate,
     DateTime? lastDate,
+    bool withHours = false,
   }) {
+    if (withHours) {
+      return showDialog<DateTime>(
+        context: context,
+        builder: (context) => _DatePickerDialog(
+          title: title,
+          initialDate: initialDate ?? AppUtils.getFechaActual(),
+          firstDate: firstDate ?? DateTime(1900),
+          lastDate: lastDate ??
+              AppUtils.getFechaActual().add(const Duration(days: 365)),
+        ),
+      ).then((date) {
+        if (date == null) return null;
+        return TimePickerWidget.showTimePickerDialog(
+          context: context,
+          title: 'Seleccionar Hora de Entrega',
+          initialTime: TimeOfDay.fromDateTime(date),
+        ).then((time) {
+          if (time == null) return null;
+          return DateTime(
+            date.year, date.month, date.day, time.hour, time.minute,
+          );
+        });
+      });
+    }
     return showDialog<DateTime>(
       context: context,
       builder: (context) => _DatePickerDialog(

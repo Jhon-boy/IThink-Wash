@@ -656,49 +656,7 @@ class _CrearPersonaPageState extends ConsumerState<CrearPersonaPage> {
                       ],
                       validator: _validarApellidos,
                     ),
-                    const SizedBox(height: 24),
-
-                    _buildSectionTitle('Información Adicional'),
-                    const Divider(),
                     const SizedBox(height: 16),
-
-                    CalendarWidget(
-                      title: 'Fecha de Nacimiento',
-                      hint: 'Seleccionar fecha de nacimiento',
-                      selectedDate: _fechaNacimiento,
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
-                      initialDate: DateTime(2000),
-                      icon: Icons.calendar_today,
-                      onDateSelected: _onFechaSeleccionada,
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Género
-                    CustomDropdown<String>(
-                      value: _generoSeleccionado,
-                      label: 'Género',
-                      hint: 'Seleccione el género',
-                      items: _generos,
-                      displayText: (item) => item,
-                      onChanged: (value) {
-                        setState(() {
-                          _generoSeleccionado = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-
-                    TextFormField(
-                      controller: _correoController,
-                      keyboardType: TextInputType.emailAddress,
-                      maxLength: 30,
-                      decoration: ThemeApp.inputDecoration('Correo Electrónico',
-                          'correo@ejemplo.com', Icons.email),
-                      validator: _validarCorreo,
-                    ),
-                    const SizedBox(height: 16),
-
                     // Teléfono
                     TextFormField(
                       controller: _telefonoController,
@@ -710,34 +668,83 @@ class _CrearPersonaPageState extends ConsumerState<CrearPersonaPage> {
                       validator: _validarTelefono,
                     ),
                     const SizedBox(height: 16),
+                    _buildSectionTitle('Información Adicional'),
+                    ExpansionTile(
+                      title: const Text('Opcionl'),
+                      children: [
+                        const Divider(),
+                        const SizedBox(height: 16),
 
-                    TextFormField(
-                      controller: _direccionController,
-                      textCapitalization: TextCapitalization.words,
-                      maxLines: 2,
-                      maxLength: 100,
-                      inputFormatters: [UpperCaseTextFormatter()],
-                      decoration: ThemeApp.inputDecoration('Dirección',
-                          'Calle principal y secundaria', Icons.location_on),
+                        CalendarWidget(
+                          title: 'Fecha de Nacimiento',
+                          hint: 'Seleccionar fecha de nacimiento',
+                          selectedDate: _fechaNacimiento,
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime.now(),
+                          initialDate: DateTime(2000),
+                          icon: Icons.calendar_today,
+                          onDateSelected: _onFechaSeleccionada,
+                        ),
+                        const SizedBox(height: 16),
+
+                        // Género
+                        CustomDropdown<String>(
+                          value: _generoSeleccionado,
+                          label: 'Género',
+                          hint: 'Seleccione el género',
+                          items: _generos,
+                          displayText: (item) => item,
+                          onChanged: (value) {
+                            setState(() {
+                              _generoSeleccionado = value;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 10),
+
+                        TextFormField(
+                          controller: _correoController,
+                          keyboardType: TextInputType.emailAddress,
+                          maxLength: 30,
+                          decoration: ThemeApp.inputDecoration(
+                              'Correo Electrónico',
+                              'correo@ejemplo.com',
+                              Icons.email),
+                          validator: _validarCorreo,
+                        ),
+                        const SizedBox(height: 16),
+
+                        TextFormField(
+                          controller: _direccionController,
+                          textCapitalization: TextCapitalization.words,
+                          maxLines: 2,
+                          maxLength: 100,
+                          inputFormatters: [UpperCaseTextFormatter()],
+                          decoration: ThemeApp.inputDecoration(
+                              'Dirección',
+                              'Calle principal y secundaria',
+                              Icons.location_on),
+                        ),
+                        const SizedBox(height: 16),
+                        if (widget.esEdicion) ...[
+                          CustomDropdown<String>(
+                            value: _estadoSeleccionado,
+                            label: 'Estado',
+                            hint: 'Seleccione el estado',
+                            items: EstadosGeneral.allStates,
+                            displayText: (item) => item,
+                            subtitleText: (item) =>
+                                EstadosGeneral.getLabelFromState(item),
+                            onChanged: (value) {
+                              setState(() {
+                                _estadoSeleccionado = value;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+                      ],
                     ),
-                    const SizedBox(height: 16),
-                    if (widget.esEdicion) ...[
-                      CustomDropdown<String>(
-                        value: _estadoSeleccionado,
-                        label: 'Estado',
-                        hint: 'Seleccione el estado',
-                        items: EstadosGeneral.allStates,
-                        displayText: (item) => item,
-                        subtitleText: (item) =>
-                            EstadosGeneral.getLabelFromState(item),
-                        onChanged: (value) {
-                          setState(() {
-                            _estadoSeleccionado = value;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                    ],
 
                     // Botones de acción
                     Row(
@@ -746,7 +753,8 @@ class _CrearPersonaPageState extends ConsumerState<CrearPersonaPage> {
                           flex: 1,
                           child: CustomButton(
                               isLoading: _isLoading,
-                              colorButton: ThemeApp.textSecondary,
+                              colorButton: ThemeApp.white,
+                              colorText: ThemeApp.apple,
                               text: 'Cancelar',
                               onPressed: () => Navigator.of(context).pop()),
                         ),

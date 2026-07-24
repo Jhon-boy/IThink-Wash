@@ -9,6 +9,7 @@ import 'package:ithinkwash/modules/conceptos/presentation/conceptos_page.dart';
 import 'package:ithinkwash/modules/main/presentation/inicio_page.dart';
 import 'package:ithinkwash/modules/notification/notifications_list.dart';
 import 'package:ithinkwash/modules/notification/providers/notification_provider.dart';
+import 'package:ithinkwash/modules/ordenes/presentation/nueva_orden/nueva_orden_page.dart';
 import 'package:ithinkwash/modules/user/presentation/crear_persona_page.dart';
 import 'package:ithinkwash/shared/baseApp/app_drawer.dart';
 import 'package:ithinkwash/shared/baseApp/app_bottom_nav.dart';
@@ -135,7 +136,7 @@ class _MainPageState extends ConsumerState<MainPage> {
             InicioPage(onSectionChange: (index) {
               ref.read(navigationIndexProvider.notifier).state = index;
             }),
-            // const VentaPage(),
+             const NuevaOrdenPage(),
             // const MiDiaPage(),
             // const PerfilPage(),
           ],
@@ -157,6 +158,22 @@ class _MainPageState extends ConsumerState<MainPage> {
 
     // Manejar menús del drawer según el índice
     switch (index) {
+      case 1:
+        // Navegar a la página de Conceptos
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const InicioPage(),
+          ),
+        );
+        break;
+      case 2:
+        // Navegar a la página de Crear Persona
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const NuevaOrdenPage(),
+          ),
+        );
+        break;
       case 4: // Configuración
         Navigator.of(context).push(
           MaterialPageRoute(
