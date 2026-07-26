@@ -219,8 +219,7 @@ class AppUtils {
     DialogHelper.confirm(
       context,
       message: '¿Estás seguro de querer cerrar sesión?',
-      onConfirm: () {
-        // Limpiar todos los providers antes de cerrar sesión
+      onConfirm: () { 
         clearProviders(context);
         navigator?.pushNamedAndRemoveUntil('/login', (route) => false);
       },

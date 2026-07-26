@@ -44,7 +44,7 @@ enum EstadosOrden {
       case INGRESADO:
         return ThemeApp.primary; // Azul
       case EN_PROCESO:
-        return ThemeApp.white; // Amarillo
+        return ThemeApp.blue; // Azul
       case LISTO_PARA_ENTREGA:
         return ThemeApp.link; // Verde
       case ENTREGADO:

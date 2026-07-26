@@ -958,6 +958,7 @@ class _NuevaOrdenPageState extends ConsumerState<NuevaOrdenPage> {
                     keyboardType: TextInputType.number,
                     decoration: ThemeApp.inputDecoration(
                         'Monto', '0.00', Icons.attach_money),
+                    onChanged: (_) => setState(() {}),
                   )),
                   const SizedBox(width: 10),
                   Expanded(
@@ -1019,10 +1020,6 @@ class _NuevaOrdenPageState extends ConsumerState<NuevaOrdenPage> {
             _rRow('Saldo Pendiente', '\$${saldo.toStringAsFixed(2)}',
                 bold: true,
                 color: saldo > 0 ? ThemeApp.error : ThemeApp.success),
-            if (totalAbonado > 0) ...[
-              const Divider(height: 10),
-              _rRow('Total', '\$${_total.toStringAsFixed(2)}', bold: true),
-            ],
           ])),
       _buildBottomNav(),
     ]);
