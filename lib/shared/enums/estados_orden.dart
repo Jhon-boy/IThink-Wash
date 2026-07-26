@@ -21,7 +21,7 @@ enum EstadosOrden {
 
   static EstadosOrden fromCode(String code) {
     return all.firstWhere(
-      (e) => e.code == code.toUpperCase(),
+      (e) => e.code.toUpperCase() == code.toUpperCase(),
       orElse: () => EN_PROCESO,
     );
   }

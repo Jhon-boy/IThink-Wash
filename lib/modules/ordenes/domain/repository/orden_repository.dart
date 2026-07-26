@@ -8,6 +8,7 @@ import 'package:ithinkwash/core/utils/either.dart';
 abstract class OrdenRepository {
   Future<Either<Failure, List<TordOrdenEntity>>> getOrdenesEntity();
   Future<Either<Failure, List<TordOrdenEntity>>> getOrdenesBySucursalEntity(int idSucursal);
+  Future<Either<Failure, List<TordOrdenEntity>>> getOrdenesByFechaRangeEntity(int idSucursal, DateTime desde, DateTime hasta);
   Future<Either<Failure, TordOrdenEntity>> getOrdenByIdEntity(int idOrden);
   Future<Either<Failure, TordOrdenEntity>> registerOrdenEntity(TordOrdenEntity data);
   Future<Either<Failure, TordOrdenEntity>> updateOrdenEntity(TordOrdenEntity data);

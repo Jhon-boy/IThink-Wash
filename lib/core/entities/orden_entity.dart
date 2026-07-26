@@ -31,7 +31,7 @@ class TordOrdenEntity {
     this.total,
     this.totalAbonado,
     this.saldoPendiente,
-    this.estado = 'EN_PROCESO',
+    required this.estado,
     this.comentario,
     this.fCreacion,
     this.fModificacion,
@@ -46,17 +46,26 @@ class TordOrdenEntity {
       idPersona: json['idpersona'] ?? 0,
       idEmpleado: json['idempleado'] ?? 0,
       numeroOrden: json['numeroorden'],
-      fechaRecepcion: json['fecharecepcion'] != null ? DateTime.parse(json['fecharecepcion']) : DateTime.now(),
-      fechaEntregaEstimada: json['fechaentregaestimada'] != null ? DateTime.parse(json['fechaentregaestimada']) : null,
-      fechaEntregaReal: json['fechaentregareal'] != null ? DateTime.parse(json['fechaentregareal']) : null,
+      fechaRecepcion: json['fecharecepcion'] != null
+          ? DateTime.parse(json['fecharecepcion'])
+          : DateTime.now(),
+      fechaEntregaEstimada: json['fechaentregaestimada'] != null
+          ? DateTime.parse(json['fechaentregaestimada'])
+          : null,
+      fechaEntregaReal: json['fechaentregareal'] != null
+          ? DateTime.parse(json['fechaentregareal'])
+          : null,
       subtotal: (json['subtotal'] as num?)?.toDouble(),
       total: (json['total'] as num?)?.toDouble(),
       totalAbonado: (json['totalabonado'] as num?)?.toDouble(),
       saldoPendiente: (json['saldopendiente'] as num?)?.toDouble(),
       estado: json['estado'] ?? 'EN_PROCESO',
       comentario: json['comentario'],
-      fCreacion: json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
-      fModificacion: json['fmodificacion'] != null ? DateTime.parse(json['fmodificacion']) : null,
+      fCreacion:
+          json['fcreacion'] != null ? DateTime.parse(json['fcreacion']) : null,
+      fModificacion: json['fmodificacion'] != null
+          ? DateTime.parse(json['fmodificacion'])
+          : null,
       usuarioCreacion: json['usuariocreacion'],
       usuarioModificacion: json['usuariomodificacion'],
     );

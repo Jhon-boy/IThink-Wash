@@ -42,6 +42,18 @@ class OrdenRemoteRepository implements OrdenRepository {
   }
 
   @override
+  Future<Either<Failure, List<TordOrdenEntity>>> getOrdenesByFechaRangeEntity(int idSucursal, DateTime desde, DateTime hasta) async {
+    if (!await _connectivity.checkConnection()) {
+      return const Left(NetworkFailure('No hay conexión a internet'));
+    }
+    try {
+      return Right(await remote.getOrdenesBySucursalAndFecha(idSucursal, desde, hasta));
+    } catch (_) {
+      return const Left(ServerFailure('Ha ocurrido un error, inténtalo más tarde'));
+    }
+  }
+
+  @override
   Future<Either<Failure, TordOrdenEntity>> getOrdenByIdEntity(
       int idOrden) async {
     if (!await _connectivity.checkConnection()) {

@@ -80,7 +80,7 @@ class _NuevaOrdenPageState extends ConsumerState<NuevaOrdenPage> {
   PersonaEntity? _cliente;
   List<TserConceptoEntity> _conceptos = [];
   List<TserServicioAdicionalEntity> _servicios = [];
-  List<PrendaTemp> _prendas = [];
+  final List<PrendaTemp> _prendas = [];
   final _comentarioCtrl = TextEditingController();
   final _fechaCtrl = TextEditingController();
   final _pagoMontoCtrl = TextEditingController();

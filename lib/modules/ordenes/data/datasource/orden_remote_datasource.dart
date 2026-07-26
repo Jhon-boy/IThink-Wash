@@ -47,6 +47,24 @@ class OrdenRemoteDataSource {
     }
   }
 
+  Future<List<TordOrdenEntity>> getOrdenesBySucursalAndFecha(int idSucursal, DateTime fechaDesde, DateTime fechaHasta) async {
+    try {
+      final result = await SupabaseService.select(
+        table: Entities.TORDORDEN.tableName,
+        filters: {
+          'idsucursal': idSucursal,
+          'fecharecepcion_gte': fechaDesde.toIso8601String(),
+          'fecharecepcion_lte': fechaHasta.toIso8601String(),
+        },
+        orderBy: 'fecharecepcion',
+        ascending: false,
+      );
+      return result.map((json) => TordOrdenEntity.fromJson(json)).toList();
+    } catch (e) {
+      _handleError(e, 'getOrdenesBySucursalAndFecha');
+    }
+  }
+
   Future<TordOrdenEntity?> getOrdenById(int idOrden) async {
     try {
       final result = await SupabaseService.selectSingle(

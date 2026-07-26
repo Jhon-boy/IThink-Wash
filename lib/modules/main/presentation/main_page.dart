@@ -11,6 +11,7 @@ import 'package:ithinkwash/modules/notification/notifications_list.dart';
 import 'package:ithinkwash/modules/notification/providers/notification_provider.dart';
 import 'package:ithinkwash/modules/ordenes/presentation/nueva_orden/nueva_orden_page.dart';
 import 'package:ithinkwash/modules/user/presentation/crear_persona_page.dart';
+import 'package:ithinkwash/modules/user/presentation/perfil_page.dart';
 import 'package:ithinkwash/shared/baseApp/app_drawer.dart';
 import 'package:ithinkwash/shared/baseApp/app_bottom_nav.dart';
 
@@ -138,7 +139,7 @@ class _MainPageState extends ConsumerState<MainPage> {
             }),
              const NuevaOrdenPage(),
             // const MiDiaPage(),
-            // const PerfilPage(),
+             const PerfilPage(),
           ],
         ),
         bottomNavigationBar: AppBottomNav(
